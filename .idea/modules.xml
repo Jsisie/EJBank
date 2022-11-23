@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/EJBank.iml" filepath="$PROJECT_DIR$/.idea/EJBank.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EJBank-ear/EJBank-ear.iml" filepath="$PROJECT_DIR$/EJBank-ear/EJBank-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EJBank-ejb/EJBank-ejb.iml" filepath="$PROJECT_DIR$/EJBank-ejb/EJBank-ejb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EJBank-web/EJBank-web.iml" filepath="$PROJECT_DIR$/EJBank-web/EJBank-web.iml" />
     </modules>
   </component>
 </project>

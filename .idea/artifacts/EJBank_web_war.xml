@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="EJBank-web:war">
+    <output-path>$PROJECT_DIR$/EJBank-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>EJBank-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="EJBank-web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="EJBank-web:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="EJBank-web" />
+        <module name="EJBank-ejb" />
+        <module name="EJBank-ear" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="EJBank" target="17" />
+      <module name="EJBank-ear" target="17" />
+      <module name="EJBank-ejb" target="17" />
+      <module name="EJBank-web" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="EJBank-ejb" options="-endorseddirs D:\Programs\Java\JEE\EJBank\EJBank-ejb\target/endorsed" />
+      <module name="EJBank-web" options="-endorseddirs D:\Programs\Java\JEE\EJBank\EJBank-web\target/endorsed" />
+    </option>
+  </component>
+</project>

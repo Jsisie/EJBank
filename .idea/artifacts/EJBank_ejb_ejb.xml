@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="EJBank-ejb:ejb">
+    <output-path>$PROJECT_DIR$/EJBank-ejb/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>EJBank-ejb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="EJBank-ejb-1.0-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="EJBank-ejb:ejb exploded" />
+    </root>
+  </artifact>
+</component>

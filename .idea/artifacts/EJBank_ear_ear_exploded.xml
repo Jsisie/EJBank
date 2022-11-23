@@ -1,0 +1,35 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="EJBank-ear:ear exploded">
+    <output-path>$PROJECT_DIR$/EJBank-ear/target/EJBank</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>EJBank-ear</module>
+        <packaging>ear</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="EJBank-ear/javaeeApplication/JavaEE" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/EJBank-ear/target/EJBank/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/EJBank-ear/src/main/application" />
+      <element id="archive" name="EJBank-ejb-1.0-SNAPSHOT.jar">
+        <element id="artifact" artifact-name="EJBank-ejb:ejb exploded" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="Maven: org.liquibase:liquibase-core:4.17.2" />
+        <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.3.1" />
+        <element id="library" level="project" name="Maven: javax.activation:javax.activation-api:1.2.0" />
+        <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.33" />
+        <element id="library" level="project" name="Maven: com.opencsv:opencsv:5.7.1" />
+        <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.12.0" />
+        <element id="library" level="project" name="Maven: org.apache.commons:commons-text:1.10.0" />
+        <element id="library" level="project" name="Maven: org.apache.commons:commons-collections4:4.4" />
+      </element>
+      <element id="archive" name="EJBank-web-1.0-SNAPSHOT.war">
+        <element id="artifact" artifact-name="EJBank-web:war exploded" />
+      </element>
+    </root>
+  </artifact>
+</component>
