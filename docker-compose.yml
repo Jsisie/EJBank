@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: ejbank
+            MYSQL_PASSWORD: root
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - 8003:80
+
+    app:
+        build: .
+        links:
+            - db:db
+        ports:
+            - 8001:8181
+            - 8002:4848
+        volumes:
+            - ./deployments:/opt/payara/appserver/glassfish/domains/domain1/autodeploy
+
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <jdbc-resource pool-name="ArquillianEmbeddedDerbyPool"
+                   jndi-name="jdbc/arquillian"/>
+    <jdbc-connection-pool name="ArquillianEmbeddedDerbyPool"
+                          res-type="javax.sql.DataSource"
+                          datasource-classname="org.apache.derby.jdbc.EmbeddedDataSource"
+                          is-isolation-level-guaranteed="false">
+        <property name="databaseName" value="target/databases/derby"/>
+        <property name="createDatabase" value="create"/>
+    </jdbc-connection-pool>
+</resources>
