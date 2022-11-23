@@ -1,9 +1,6 @@
 package com.ejbank.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -11,17 +8,20 @@ import java.io.Serializable;
 public class UserEntity implements Serializable {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     @Column(name = "firstName", nullable =false, length = 20)
     private String firstName;
-    @Column(name = "firstName", nullable =false, length = 20)
+    @Column(name = "lastName", nullable =false, length = 20)
     private String lastName;
 
-    public UserEntity(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
+    public Integer getId() {
+        return id;
+    }
     public UserEntity() {}
 
     public String getLastName() {
@@ -38,14 +38,5 @@ public class UserEntity implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
     }
 }
