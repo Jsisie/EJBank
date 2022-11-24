@@ -1,15 +1,11 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.PeoplePayload;
-import com.ejbank.service.TestBeanService;
+import com.ejbank.service.TestBeanServiceImpl;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/test")
@@ -18,8 +14,8 @@ import javax.ws.rs.core.MediaType;
 public class Test {
 
     @EJB
-    private TestBeanService testBean;
-    
+    private TestBeanServiceImpl testBean;
+
     @GET
     @Path("/ejb")
     public String testEJB() {
@@ -27,9 +23,9 @@ public class Test {
     }
 
     @GET
-    @Path("/getFirstName")
-    public String testEJBFirstName() {
-        return testBean.getFirstName(1);
+    @Path("/getFirstName/{id}")
+    public String testEJBFirstName(@PathParam("id") Integer id) {
+        return testBean.getFirstName(id);
     }
 
     @GET
@@ -37,7 +33,7 @@ public class Test {
     public PeoplePayload testPayloadResponse(@PathParam("age") Integer age) {
         return new PeoplePayload("Jean", "Dupont", age);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/post")

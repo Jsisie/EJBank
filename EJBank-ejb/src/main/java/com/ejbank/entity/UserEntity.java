@@ -10,10 +10,12 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "firstName", nullable =false, length = 20)
+    @Column(name = "firstname", nullable =false, length = 20)
     private String firstName;
-    @Column(name = "lastName", nullable =false, length = 20)
+    @Column(name = "lastname", nullable =false, length = 20)
     private String lastName;
+
+    public UserEntity() {}
 
     public void setId(Integer id) {
         this.id = id;
@@ -22,7 +24,6 @@ public class UserEntity implements Serializable {
     public Integer getId() {
         return id;
     }
-    public UserEntity() {}
 
     public String getLastName() {
         return lastName;
