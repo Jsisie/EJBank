@@ -1,6 +1,5 @@
 package com.ejbank.api;
 
-import com.ejbank.payload.UserPayload;
 import com.ejbank.service.TestBeanServiceImpl;
 
 import javax.ejb.EJB;
@@ -19,8 +18,8 @@ public class TransactionAPI {
     private TestBeanServiceImpl testBean;
 
     @GET
-    @Path("/{id}")
-    public UserPayload testEJBFirstName(@PathParam("id") Integer id) {
-        return testBean.getName(id);
+    @Path("/test")
+    public String testEJBFirstName() {
+        return testBean.test();
     }
 }

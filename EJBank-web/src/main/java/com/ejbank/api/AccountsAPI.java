@@ -19,8 +19,8 @@ public class AccountsAPI {
     private TestBeanServiceImpl testBean;
 
     @GET
-    @Path("/{id}")
-    public UserPayload testEJBFirstName(@PathParam("id") Integer id) {
-        return testBean.getName(id);
+    @Path("/test")
+    public String testEJBFirstName() {
+        return testBean.test();
     }
 }
