@@ -1,6 +1,6 @@
 package com.ejbank.api;
 
-import com.ejbank.service.TestBeanServiceImpl;
+import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -14,11 +14,11 @@ import javax.ws.rs.core.MediaType;
 @RequestScoped
 public class TransactionAPI {
     @EJB
-    private TestBeanServiceImpl testBean;
+    private TransactionBeanServiceImpl transactionBeanService;
 
     @GET
     @Path("/test")
     public String testEJBFirstName() {
-        return testBean.test();
+        return transactionBeanService.test();
     }
 }
