@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/server")
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class CheckServer {
+public class ServerAPI {
 
     @GET
     @Path("/status")
