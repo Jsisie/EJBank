@@ -11,7 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/acounts")
+@Path("/accounts")
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class AccountsAPI {
