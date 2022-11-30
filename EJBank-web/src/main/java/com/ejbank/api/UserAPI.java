@@ -1,7 +1,7 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.UserPayload;
-import com.ejbank.service.TestBeanServiceImpl;
+import com.ejbank.service.UserBean.UserBeanServiceImpl;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -14,11 +14,11 @@ import javax.ws.rs.core.MediaType;
 public class UserAPI {
 
     @EJB
-    private TestBeanServiceImpl testBean;
+    private UserBeanServiceImpl userBean;
 
     @GET
     @Path("/{id}")
     public UserPayload testEJBFirstName(@PathParam("id") Integer id) {
-        return testBean.getName(id);
+        return userBean.getName(id);
     }
 }

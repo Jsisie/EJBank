@@ -8,5 +8,4 @@ import javax.ejb.Local;
 public interface TestBeanService {
 
     String test();
-    UserPayload getName(int id);
 }
