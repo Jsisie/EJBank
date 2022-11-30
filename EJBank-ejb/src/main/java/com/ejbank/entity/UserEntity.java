@@ -11,9 +11,9 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "firstname", nullable =false, length = 20)
-    private String firstName;
+    private String firstname;
     @Column(name = "lastname", nullable =false, length = 20)
-    private String lastName;
+    private String lastname;
 
     public UserEntity() {}
 
@@ -25,19 +25,19 @@ public class UserEntity implements Serializable {
         return id;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstName) {
+        this.firstname = firstName;
     }
 }

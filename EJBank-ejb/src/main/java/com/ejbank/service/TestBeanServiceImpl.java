@@ -1,5 +1,6 @@
 package com.ejbank.service;
 
+import com.ejbank.payload.UserPayload;
 import com.ejbank.repository.UserRepository;
 
 import javax.ejb.LocalBean;
@@ -22,7 +23,7 @@ public class TestBeanServiceImpl implements TestBeanService {
     }
 
     @Override
-    public String getFirstName(int id) {
-        return userRepository.getFirstName(id);
+    public UserPayload getName(int id) {
+        return userRepository.getName(id);
     }
 }

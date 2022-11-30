@@ -8,10 +8,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/test")
+@Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class Test {
+public class UserAPI {
 
     @EJB
     private TestBeanServiceImpl testBean;
@@ -20,6 +20,12 @@ public class Test {
     @Path("/ejb")
     public String testEJB() {
         return testBean.test();
+    }
+
+    @GET
+    @Path("/{id}")
+    public UserPayload testEJBFirstName(@PathParam("id") Integer id) {
+        return testBean.getName(id);
     }
 
     @GET
