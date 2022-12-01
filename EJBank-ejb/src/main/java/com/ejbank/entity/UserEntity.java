@@ -2,6 +2,7 @@ package com.ejbank.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "ejbank_user")
@@ -22,6 +23,12 @@ public class UserEntity implements Serializable {
     private String lastname;
     @Column(name = "type", nullable = false, length = 50)
     private String type;
+    @OneToMany(mappedBy = "author")
+    private List<TransactionEntity> transactions;
+    @OneToMany
+    private List<CustomerEntity> customers;
+    @OneToMany
+    private List<AdvisorEntity> advisors;
 
     public UserEntity() {
     }
@@ -52,5 +59,9 @@ public class UserEntity implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public List<TransactionEntity> getTransactions() {
+        return transactions;
     }
 }
