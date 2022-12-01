@@ -15,7 +15,7 @@
       </element>
       <element id="dir-copy" path="$PROJECT_DIR$/EJBank-ear/src/main/application" />
       <element id="archive" name="EJBank-ejb-1.0-SNAPSHOT.jar">
-        <element id="artifact" artifact-name="EJBank-ejb:ejb exploded" />
+        <element id="module-output" name="EJBank-ejb" />
       </element>
       <element id="directory" name="lib">
         <element id="library" level="project" name="Maven: org.liquibase:liquibase-core:4.17.2" />
