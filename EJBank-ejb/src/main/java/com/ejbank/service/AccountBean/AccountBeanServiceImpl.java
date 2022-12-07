@@ -1,5 +1,6 @@
 package com.ejbank.service.AccountBean;
 
+import com.ejbank.payload.ListAccountsPayload;
 import com.ejbank.repository.AccountRepository;
 
 import javax.ejb.LocalBean;
@@ -19,5 +20,10 @@ public class AccountBeanServiceImpl implements AccountBeanService {
     @Override
     public String test() {
         return "test Account";
+    }
+
+    @Override
+    public ListAccountsPayload getAccountsFromUserId(Integer id) {
+        return accountRepository.getAccountsFromUserId(id);
     }
 }

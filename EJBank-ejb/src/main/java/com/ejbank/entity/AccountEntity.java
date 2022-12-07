@@ -13,10 +13,10 @@ public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType. EAGER)
     @JoinColumn(name = "account_type_id", nullable = false)
     private AccountTypeEntity accountType;
     @Column(name = "balance", nullable = true)

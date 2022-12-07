@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -19,6 +20,12 @@ public class AccountAPI {
     @GET
     @Path("/test")
     public String testEJBFirstName() {
+        return accountBeanService.test();
+    }
+
+    @GET
+    @Path("/{account_id}/{user_id}")
+    public String getOneAccountFromUserId(@PathParam("account_id") Integer accountID, @PathParam("user_id") Integer userID) {
         return accountBeanService.test();
     }
 }

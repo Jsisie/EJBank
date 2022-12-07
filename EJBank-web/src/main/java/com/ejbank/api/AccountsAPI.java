@@ -1,5 +1,6 @@
 package com.ejbank.api;
 
+import com.ejbank.payload.ListAccountsPayload;
 import com.ejbank.service.AccountBean.AccountBeanServiceImpl;
 
 import javax.ejb.EJB;
@@ -25,8 +26,8 @@ public class AccountsAPI {
 
     @GET
     @Path("/{user_id}")
-    public String getAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.test();
+    public ListAccountsPayload getAccountsFromUserId(@PathParam("user_id") Integer id) {
+        return accountBeanService.getAccountsFromUserId(id);
     }
 
     @GET
@@ -38,12 +39,6 @@ public class AccountsAPI {
     @GET
     @Path("/all/{user_id}")
     public String getAllAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.test();
-    }
-
-    @GET
-    @Path("/{account_id}/{user_id}")
-    public String getOneAccountFromUserId(@PathParam("account_id") Integer accountID, @PathParam("user_id") Integer userID) {
         return accountBeanService.test();
     }
 }

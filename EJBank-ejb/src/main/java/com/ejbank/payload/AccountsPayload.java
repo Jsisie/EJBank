@@ -4,12 +4,12 @@ public class AccountsPayload {
     private int id;
     private String user;
     private String type;
-    private int amount;
+    private float amount;
     private int validation;
 
     public AccountsPayload(int id,
                            String firstName, String lastName,
-                           String type, int amount, int validation) {
+                           String type, float amount, int validation) {
         this.id = id;
         this.user = firstName + " " + lastName;
         this.type = type;
@@ -17,13 +17,13 @@ public class AccountsPayload {
         this.validation = validation;
     }
 
-    public AccountsPayload(int id, String type, int amount) {
+    public AccountsPayload(int id, String type, float amount) {
         this.id = id;
         this.type = type;
         this.amount = amount;
     }
 
-    public AccountsPayload(int id, String firstName, String lastName, String type, int amount) {
+    public AccountsPayload(int id, String firstName, String lastName, String type, float amount) {
         this.id = id;
         this.user = firstName + " " + lastName;
         this.type = type;
@@ -42,7 +42,7 @@ public class AccountsPayload {
         return type;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
