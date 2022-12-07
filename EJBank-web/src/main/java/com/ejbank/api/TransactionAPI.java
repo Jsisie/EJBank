@@ -23,6 +23,12 @@ public class TransactionAPI {
     }
 
     @GET
+    @Path("/validation/notification/{user_id}")
+    public Integer getNbTransactionNotificationFromUserId(@PathParam("user_id") Integer userID) {
+        return transactionBeanService.getNbTransactions(userID);
+    }
+
+    @GET
     @Path("/list/{account_id}/{offset}/{user_id}")
     public TransactionListPayload getAllTransactionsFromAccountFromUserID(@PathParam("account_id") Integer accountID,
                                                                           @PathParam("offset") Integer offset,

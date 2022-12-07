@@ -10,4 +10,6 @@ public interface TransactionBeanService {
     String test();
 
     TransactionListPayload getTransactionList(Integer accountID, Integer offset, Integer userID);
+
+    Integer getNbTransactions(Integer userID);
 }

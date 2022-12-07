@@ -25,6 +25,11 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     @Override
+    public Integer getNbTransactions(Integer userID) {
+        return transactionRepository.getNbTransactions(userID);
+    }
+
+    @Override
     public TransactionListPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
         return transactionRepository.getTransactionList(accountID, offset, userID);
     }
