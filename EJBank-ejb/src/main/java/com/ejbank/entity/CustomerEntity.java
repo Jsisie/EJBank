@@ -1,11 +1,13 @@
 package com.ejbank.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "ejbank_customer")
-public class CustomerEntity {
+@DiscriminatorValue(value = "customer")
+public class CustomerEntity extends UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -14,10 +16,8 @@ public class CustomerEntity {
     @ManyToOne
     @JoinColumn(name = "advisor_id", nullable = false)
     private AdvisorEntity advisorId;
-    @ManyToOne
-    private UserEntity user;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -27,9 +27,5 @@ public class CustomerEntity {
 
     public List<AccountEntity> getAccounts() {
         return accounts;
-    }
-
-    public UserEntity getUser() {
-        return user;
     }
 }

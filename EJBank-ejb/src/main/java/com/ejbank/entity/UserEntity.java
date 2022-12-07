@@ -6,29 +6,20 @@ import java.util.List;
 
 @Entity
 @Table(name = "ejbank_user")
+@DiscriminatorValue(value = "user")
+@DiscriminatorColumn(name = "type")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "login", nullable = false, length = 8)
-    private String login;
-    @Column(name = "password", nullable = false, length = 255)
-    private String password;
-    @Column(name = "email", nullable = false, length = 255)
-    private String email;
     @Column(name = "firstname", nullable = false, length = 50)
     private String firstname;
     @Column(name = "lastname", nullable = false, length = 50)
     private String lastname;
-    @Column(name = "type", nullable = false, length = 50)
-    private String type;
-    @OneToMany(mappedBy = "author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     private List<TransactionEntity> transactions;
-    @OneToMany
-    private List<CustomerEntity> customers;
-    @OneToMany
-    private List<AdvisorEntity> advisors;
 
     public UserEntity() {
     }
@@ -37,28 +28,12 @@ public class UserEntity implements Serializable {
         return id;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
     public String getFirstname() {
         return firstname;
     }
 
     public String getLastname() {
         return lastname;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public List<TransactionEntity> getTransactions() {
