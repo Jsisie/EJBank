@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/transaction")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class TransactionAPI {
     @EJB
