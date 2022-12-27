@@ -7,27 +7,18 @@ public class AccountsPayload {
     private float amount;
     private int validation;
 
-    public AccountsPayload(int id,
-                           String firstName, String lastName,
-                           String type, float amount, int validation) {
-        this.id = id;
-        this.user = firstName + " " + lastName;
-        this.type = type;
-        this.amount = amount;
-        this.validation = validation;
-    }
-
     public AccountsPayload(int id, String type, float amount) {
         this.id = id;
         this.type = type;
         this.amount = amount;
     }
 
-    public AccountsPayload(int id, String firstName, String lastName, String type, float amount) {
+    public AccountsPayload(int id, String firstName, String lastName, String type, float amount, int validation) {
         this.id = id;
         this.user = firstName + " " + lastName;
         this.type = type;
         this.amount = amount;
+        this.validation = validation;
     }
 
     public int getId() {

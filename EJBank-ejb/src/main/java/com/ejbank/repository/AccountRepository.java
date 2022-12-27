@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 @LocalBean
@@ -19,24 +20,58 @@ public class AccountRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
-    public ListAccountsPayload getAccountsFromUserId(Integer id) {
-        var user = em.find(UserEntity.class, id);
-        var accountList = new ArrayList<AccountsPayload>();
-        var customers = new ArrayList<CustomerEntity>();
-
+    private List<CustomerEntity> getCustomerOrAdvisor(UserEntity user, int id) {
         if (user instanceof AdvisorEntity) {
             var advisor = em.find(AdvisorEntity.class, id);
-            customers = new ArrayList<>(advisor.getCustomers());
+            return new ArrayList<>(advisor.getCustomers());
         } else if (user instanceof CustomerEntity)
-            customers.add(em.find(CustomerEntity.class, id));
-        // TODO - IF id NOT PRESENT, EMPTY LIST IS RETURNED (BAD !!)
-//        else
-//            throw new Exception();
+            return List.of(em.find(CustomerEntity.class, id));
+        else
+            throw new IllegalStateException("The id given in parameters doesn't corresponds to any account");
+    }
+
+    public ListAccountsPayload getAccounts(Integer id) {
+        var user = em.find(UserEntity.class, id);
+        var accountList = new ArrayList<AccountsPayload>();
+        List<CustomerEntity> customers = getCustomerOrAdvisor(user, id);
 
         customers.forEach(customer -> customer.getAccounts().forEach(account -> accountList.add(new AccountsPayload(
                 account.getId(),
                 account.getAccountType().getName(),
                 account.getBalance()
+        ))));
+        return new ListAccountsPayload(accountList);
+    }
+
+    public ListAccountsPayload getAttachedAccounts(Integer id) {
+        var user = em.find(UserEntity.class, id);
+        var accountList = new ArrayList<AccountsPayload>();
+        List<CustomerEntity> customers = getCustomerOrAdvisor(user, id);
+
+        customers.forEach(customer -> customer.getAccounts().forEach(account -> accountList.add(new AccountsPayload(
+                account.getId(),
+                account.getCustomer().getFirstname(),
+                account.getCustomer().getLastname(),
+                account.getAccountType().getName(),
+                account.getBalance(),
+                account.getTransactionsFrom().stream().filter(transactionEntity -> !transactionEntity.getApplied()).toList().size()
+        ))));
+        return new ListAccountsPayload(accountList);
+    }
+
+    public ListAccountsPayload getAllAccounts(Integer id) {
+        // TODO - Nothing done for now, juste copy/paste from above method
+        var user = em.find(UserEntity.class, id);
+        var accountList = new ArrayList<AccountsPayload>();
+        List<CustomerEntity> customers = getCustomerOrAdvisor(user, id);
+
+        customers.forEach(customer -> customer.getAccounts().forEach(account -> accountList.add(new AccountsPayload(
+                account.getId(),
+                account.getCustomer().getFirstname(),
+                account.getCustomer().getLastname(),
+                account.getAccountType().getName(),
+                account.getBalance(),
+                account.getTransactionsFrom().stream().filter(transactionEntity -> !transactionEntity.getApplied()).toList().size()
         ))));
         return new ListAccountsPayload(accountList);
     }

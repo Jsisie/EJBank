@@ -23,7 +23,17 @@ public class AccountBeanServiceImpl implements AccountBeanService {
     }
 
     @Override
-    public ListAccountsPayload getAccountsFromUserId(Integer id) {
-        return accountRepository.getAccountsFromUserId(id);
+    public ListAccountsPayload getAccounts(Integer id) {
+        return accountRepository.getAccounts(id);
+    }
+
+    @Override
+    public ListAccountsPayload getAttachedAccounts(Integer id) {
+        return accountRepository.getAttachedAccounts(id);
+    }
+
+    @Override
+    public ListAccountsPayload getAllAccounts(Integer id) {
+        return accountRepository.getAllAccounts(id);
     }
 }

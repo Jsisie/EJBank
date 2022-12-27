@@ -27,18 +27,18 @@ public class AccountsAPI {
     @GET
     @Path("/{user_id}")
     public ListAccountsPayload getAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.getAccountsFromUserId(id);
+        return accountBeanService.getAccounts(id);
     }
 
     @GET
     @Path("/attached/{user_id}")
-    public String getAttachedAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.test();
+    public ListAccountsPayload getAttachedAccountsFromUserId(@PathParam("user_id") Integer id) {
+        return accountBeanService.getAttachedAccounts(id);
     }
 
     @GET
     @Path("/all/{user_id}")
-    public String getAllAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.test();
+    public ListAccountsPayload getAllAccountsFromUserId(@PathParam("user_id") Integer id) {
+        return accountBeanService.getAllAccounts(id);
     }
 }
