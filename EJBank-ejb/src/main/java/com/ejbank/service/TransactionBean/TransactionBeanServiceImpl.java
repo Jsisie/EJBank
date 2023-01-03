@@ -33,4 +33,6 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     public TransactionListPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
         return transactionRepository.getTransactionList(accountID, offset, userID);
     }
+
+
 }

@@ -41,11 +41,12 @@ public class AccountRepository {
         List<CustomerEntity> customers = getCustomerOrAdvisor(user, userID).orElseThrow(IllegalArgumentException::new);
         var customer = customers.get(0);
         var accounts = customer.getAccounts();
-//        var account = accounts.stream()
-//                .filter(acc -> acc.getId() == accountID)
-//                .findFirst()
-//                .orElse(null);
-        var account = accounts.get(accountID);
+
+        var account = accounts.stream()
+                .filter(acc -> acc.getId() == accountID)
+                .findFirst()
+                .orElse(null);
+
         var advisor = em.find(AdvisorEntity.class, customer.getAdvisorId());
         return new AccountPayload(
                 customer.getFirstname(),
