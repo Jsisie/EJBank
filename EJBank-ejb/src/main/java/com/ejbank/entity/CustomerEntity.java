@@ -9,7 +9,7 @@ import java.util.List;
 @DiscriminatorValue(value = "customer")
 public class CustomerEntity extends UserEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(mappedBy = "customer")
     private List<AccountEntity> accounts;

@@ -11,7 +11,7 @@ public class AccountEntity {
     @OneToMany(mappedBy = "accountTo")
     private List<TransactionEntity> transactionsTo;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)

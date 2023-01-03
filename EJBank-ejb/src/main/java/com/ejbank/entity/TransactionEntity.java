@@ -7,7 +7,7 @@ import java.sql.Date;
 @Table(name = "ejbank_transaction")
 public class TransactionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "account_id_from", nullable = false)

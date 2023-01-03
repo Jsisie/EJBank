@@ -7,7 +7,7 @@ import java.util.List;
 @Table(name = "ejbank_account_type")
 public class AccountTypeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name", nullable = false)
     private String name;
