@@ -14,6 +14,4 @@ public interface AccountsBeanService {
     ListAccountsPayload getAttachedAccounts(Integer id);
 
     ListAccountsPayload getAllAccounts(Integer id);
-
-    AccountPayload getAccount(Integer accountID, Integer userID);
 }

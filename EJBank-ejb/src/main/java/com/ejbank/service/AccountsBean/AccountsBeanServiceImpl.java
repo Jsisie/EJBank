@@ -2,7 +2,7 @@ package com.ejbank.service.AccountsBean;
 
 import com.ejbank.payload.AccountPayload;
 import com.ejbank.payload.ListAccountsPayload;
-import com.ejbank.repository.AccountRepository;
+import com.ejbank.repository.AccountsRepository;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class AccountsBeanServiceImpl implements AccountsBeanService {
 
     @Inject
-    private AccountRepository accountRepository;
+    private AccountsRepository accountsRepository;
 
     public AccountsBeanServiceImpl() {
     }
@@ -25,21 +25,16 @@ public class AccountsBeanServiceImpl implements AccountsBeanService {
 
     @Override
     public ListAccountsPayload getAccounts(Integer id) {
-        return accountRepository.getAccounts(id);
+        return accountsRepository.getAccounts(id);
     }
 
     @Override
     public ListAccountsPayload getAttachedAccounts(Integer id) {
-        return accountRepository.getAttachedAccounts(id);
+        return accountsRepository.getAttachedAccounts(id);
     }
 
     @Override
     public ListAccountsPayload getAllAccounts(Integer id) {
-        return accountRepository.getAllAccounts(id);
-    }
-
-    @Override
-    public AccountPayload getAccount(Integer accountID, Integer userID) {
-        return accountRepository.getAccount(accountID, userID);
+        return accountsRepository.getAllAccounts(id);
     }
 }
