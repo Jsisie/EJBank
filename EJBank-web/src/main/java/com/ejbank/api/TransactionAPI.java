@@ -38,19 +38,22 @@ public class TransactionAPI {
 
     @POST
     @Path("preview")
-    public void previewNewTransaction() {
-        
+    @Consumes("application/json")
+    public void previewNewTransaction(@FormParam("source") Integer sourceID, @FormParam("destination") Integer destinationID, @FormParam("amount") Float amount, @FormParam("author") String author) {
+
     }
 
     @POST
     @Path("apply")
-    public void applyNewTransaction() {
+    @Consumes("application/json")
+    public void applyNewTransaction(@FormParam("source") Integer sourceID, @FormParam("destination") Integer destinationID, @FormParam("amount") Float amount, @FormParam("comment") String comment, @FormParam("author") String author) {
 
     }
 
     @POST
     @Path("validation")
-    public void validationNewTransaction() {
+    @Consumes("application/json")
+    public void validationNewTransaction(@FormParam("transaction") Integer transactionID, @FormParam("approve") Boolean approve, @FormParam("author") String author) {
 
     }
 }

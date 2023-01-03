@@ -1,5 +1,6 @@
 package com.ejbank.api;
 
+import com.ejbank.payload.AccountPayload;
 import com.ejbank.service.AccountBean.AccountBeanServiceImpl;
 
 import javax.ejb.EJB;
@@ -25,7 +26,7 @@ public class AccountAPI {
 
     @GET
     @Path("/{account_id}/{user_id}")
-    public String getOneAccountFromUserId(@PathParam("account_id") Integer accountID, @PathParam("user_id") Integer userID) {
-        return accountBeanService.test();
+    public AccountPayload getAccount(@PathParam("account_id") Integer accountID, @PathParam("user_id") Integer userID) {
+        return accountBeanService.getAccount(accountID, userID);
     }
 }
