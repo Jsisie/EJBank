@@ -71,17 +71,6 @@ public class AccountsRepository {
 
     public ListAccountsPayload getAllAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
-        var accountList = new ArrayList<AccountsPayload>();
-        List<CustomerEntity> customers = getCustomerOrAdvisor(user, id).orElseThrow(IllegalArgumentException::new);
-
-        customers.forEach(customer -> customer.getAccounts().forEach(account -> accountList.add(new AccountsPayload(
-                account.getId(),
-                account.getCustomer().getFirstname(),
-                account.getCustomer().getLastname(),
-                account.getAccountType().getName(),
-                account.getBalance(),
-                account.getTransactionsFrom().stream().filter(transactionEntity -> !transactionEntity.getApplied()).toList().size()
-        ))));
-        return new ListAccountsPayload(accountList);
+        return isAdvisor(user)?getAccounts(id):getAttachedAccounts(id);
     }
 }
