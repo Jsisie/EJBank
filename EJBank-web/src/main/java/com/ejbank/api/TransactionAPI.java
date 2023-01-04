@@ -1,7 +1,6 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.TransactionListPayload;
-import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
 
@@ -40,27 +39,31 @@ public class TransactionAPI {
 
     @POST
     @Path("preview")
-    public void previewNewTransaction(TransactionPayload transactionPayload) {
-        System.out.println("source: " + transactionPayload.getSource());
-        System.out.println("destination: " + transactionPayload.getDestination());
-        System.out.println("amount: " + transactionPayload.getAmount());
-        System.out.println("author: " + transactionPayload.getAuthor());
-        //return transactionBeanService.
+    @Consumes("application/json")
+    public TransactionResponsePayLoad previewNewTransaction(@FormParam("source") Integer sourceID,
+                                                            @FormParam("destination") Integer destinationID,
+                                                            @FormParam("amount") Float amount,
+                                                            @FormParam("author") String author) {
+        return transactionBeanService.getTransactionPreview(sourceID, destinationID, amount, author);
     }
 
     @POST
     @Path("apply")
-    public void applyNewTransaction() {
-
+    @Consumes("application/json")
+    public TransactionResponsePayLoad applyNewTransaction(@FormParam("source") Integer sourceID,
+                                    @FormParam("destination") Integer destinationID,
+                                    @FormParam("amount") Float amount,
+                                    @FormParam("comment") String comment,
+                                    @FormParam("author") String author) {
+        return transactionBeanService.getTransactionApply(sourceID, destinationID, amount, author);
     }
 
     @POST
     @Path("validation")
-    public void validationNewTransaction(@QueryParam("transaction") Integer transactionID,
-                                         @QueryParam("approve") Boolean decision,
-                                         @QueryParam("author") Integer userID) {
-        System.out.println("transaction: " + transactionID);
-        System.out.println("approve: " + decision);
-        System.out.println("author: " + userID);
+    @Consumes("application/json")
+    public TransactionResponsePayLoad validationNewTransaction(@FormParam("transaction") Integer transactionID,
+                                         @FormParam("approve") Boolean approve,
+                                         @FormParam("author") String author) {
+        return transactionBeanService.getTransactionValidation(transactionID, approve, author);
     }
 }

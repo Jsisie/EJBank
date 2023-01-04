@@ -1,7 +1,7 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.ListAccountsPayload;
-import com.ejbank.service.AccountBean.AccountBeanServiceImpl;
+import com.ejbank.service.AccountsBean.AccountsBeanServiceImpl;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -16,29 +16,29 @@ import javax.ws.rs.core.MediaType;
 @RequestScoped
 public class AccountsAPI {
     @EJB
-    private AccountBeanServiceImpl accountBeanService;
+    private AccountsBeanServiceImpl accountsBeanService;
 
     @GET
     @Path("/test")
     public String testEJBFirstName() {
-        return accountBeanService.test();
+        return accountsBeanService.test();
     }
 
     @GET
     @Path("/{user_id}")
     public ListAccountsPayload getAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.getAccounts(id);
+        return accountsBeanService.getAccounts(id);
     }
 
     @GET
     @Path("/attached/{user_id}")
     public ListAccountsPayload getAttachedAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.getAttachedAccounts(id);
+        return accountsBeanService.getAttachedAccounts(id);
     }
 
     @GET
     @Path("/all/{user_id}")
     public ListAccountsPayload getAllAccountsFromUserId(@PathParam("user_id") Integer id) {
-        return accountBeanService.getAllAccounts(id);
+        return accountsBeanService.getAllAccounts(id);
     }
 }

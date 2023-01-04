@@ -1,5 +1,6 @@
 package com.ejbank.service.AccountBean;
 
+import com.ejbank.payload.AccountPayload;
 import com.ejbank.payload.ListAccountsPayload;
 import com.ejbank.repository.AccountRepository;
 
@@ -23,17 +24,7 @@ public class AccountBeanServiceImpl implements AccountBeanService {
     }
 
     @Override
-    public ListAccountsPayload getAccounts(Integer id) {
-        return accountRepository.getAccounts(id);
-    }
-
-    @Override
-    public ListAccountsPayload getAttachedAccounts(Integer id) {
-        return accountRepository.getAttachedAccounts(id);
-    }
-
-    @Override
-    public ListAccountsPayload getAllAccounts(Integer id) {
-        return accountRepository.getAllAccounts(id);
+    public AccountPayload getAccount(Integer accountID, Integer userID) {
+        return accountRepository.getAccount(accountID, userID);
     }
 }

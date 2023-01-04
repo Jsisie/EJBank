@@ -11,7 +11,7 @@ public class AdvisorEntity extends UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(mappedBy = "advisorId")
+    @OneToMany(mappedBy = "advisor")
     private List<CustomerEntity> customers;
 
     public Integer getId() {

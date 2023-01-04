@@ -6,8 +6,8 @@ public class ListAccountsPayload {
     private List<AccountsPayload> accounts;
     private String error;
 
-    public ListAccountsPayload(List<AccountsPayload> accounts, String error) {
-        this.accounts = accounts;
+    public ListAccountsPayload(String error) {
+        this.accounts = List.of();
         this.error = error;
     }
 

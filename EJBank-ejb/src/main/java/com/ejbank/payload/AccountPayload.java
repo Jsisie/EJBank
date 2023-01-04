@@ -3,19 +3,22 @@ package com.ejbank.payload;
 public class AccountPayload {
     private String owner;
     private String advisor;
-    private int rate;
+    private Float rate;
     private int interest;
-    private int amount;
+    private Float amount;
     private String error;
 
     public AccountPayload(String ownerFirstName, String ownerLastName,
                           String advisorFirstName, String advisorLastName,
-                          int rate, int interest, int amount, String error) {
+                          Float rate, int interest, Float amount) {
         this.owner = ownerFirstName + " " + ownerLastName;
         this.advisor = advisorFirstName + " " + advisorLastName;
         this.rate = rate;
         this.interest = interest;
         this.amount = amount;
+    }
+
+    public AccountPayload(String error) {
         this.error = error;
     }
 
@@ -27,7 +30,7 @@ public class AccountPayload {
         return advisor;
     }
 
-    public int getRate() {
+    public Float getRate() {
         return rate;
     }
 
@@ -35,7 +38,7 @@ public class AccountPayload {
         return interest;
     }
 
-    public int getAmount() {
+    public Float getAmount() {
         return amount;
     }
 

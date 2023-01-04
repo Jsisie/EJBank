@@ -7,23 +7,20 @@ public class TransactionResponsePayLoad {
     private String message;
     private String error;
 
-    public TransactionResponsePayLoad(boolean result, int before, int after, String message, String error) {
+    public TransactionResponsePayLoad(boolean result, int before, int after, String message) {
         this.result = result;
         this.before = before;
         this.after = after;
         this.message = message;
-        this.error = error;
-    }
-
-    public TransactionResponsePayLoad(boolean result, String message, String error) {
-        this.result = result;
-        this.message = message;
-        this.error = error;
     }
 
     public TransactionResponsePayLoad(boolean result, String message) {
         this.result = result;
         this.message = message;
+    }
+
+    public TransactionResponsePayLoad(String error) {
+        this.error = error;
     }
 
     public boolean isResult() {
