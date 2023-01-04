@@ -10,7 +10,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 
 @Stateless
 @LocalBean
@@ -29,20 +28,21 @@ public class TransactionRepository {
     }
 
     public TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload) {
-
-        var account = em.find(AccountEntity.class, transactionPayload.getSource());
-        var destination = em.find(AccountEntity.class, transactionPayload.getDestination());
-        return account.getBalance() > transactionPayload.getAmount()?
-                new TransactionResponsePayLoad(true, account.getBalance() - transactionPayload.getAmount(), destination.getBalance() + transactionPayload.getAmount(), "Vous  disposez d'un solde suffisant"):
-                new TransactionResponsePayLoad(false, account.getBalance() - transactionPayload.getAmount(), destination.getBalance() + transactionPayload.getAmount(), "Vous ne disposez pas d'un solde suffisant...");
+        var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
+        var destinationAccount = em.find(AccountEntity.class, transactionPayload.getDestination());
+        return sourceAccount.getBalance() >= transactionPayload.getAmount() ?
+                new TransactionResponsePayLoad(true, sourceAccount.getBalance() - transactionPayload.getAmount(),
+                        destinationAccount.getBalance() + transactionPayload.getAmount(), "Vous  disposez d'un solde suffisant")
+                : new TransactionResponsePayLoad(false, sourceAccount.getBalance(),
+                destinationAccount.getBalance(), "Vous ne disposez pas d'un solde suffisant...");
     }
 
-    public TransactionResponsePayLoad getTransactionApply(Integer sourceID, Integer destinationID, Float amount, String author) {
+    public TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload) {
         // TODO
         return null;
     }
 
-    public TransactionResponsePayLoad getTransactionValidation(Integer transactionID, Boolean approve, String author) {
+    public TransactionResponsePayLoad getTransactionValidation(TransactionPayload transactionPayload) {
         // TODO
         return null;
     }

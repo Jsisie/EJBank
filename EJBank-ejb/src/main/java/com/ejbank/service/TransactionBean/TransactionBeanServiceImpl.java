@@ -41,13 +41,13 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     @Override
-    public TransactionResponsePayLoad getTransactionApply(Integer sourceID, Integer destinationID, Float amount, String author) {
-        return transactionRepository.getTransactionApply(sourceID, destinationID, amount, author);
+    public TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload) {
+        return transactionRepository.getTransactionApply(transactionPayload);
     }
 
     @Override
-    public TransactionResponsePayLoad getTransactionValidation(Integer transactionID, Boolean approve, String author) {
-        return transactionRepository.getTransactionValidation(transactionID, approve, author);
+    public TransactionResponsePayLoad getTransactionValidation(TransactionPayload transactionPayload) {
+        return transactionRepository.getTransactionValidation(transactionPayload);
     }
 
 

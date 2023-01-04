@@ -41,30 +41,20 @@ public class TransactionAPI {
     @POST
     @Path("preview")
     public TransactionResponsePayLoad previewNewTransaction(TransactionPayload transactionPayload) {
-        System.out.println("source: " + transactionPayload.getSource());
-        System.out.println("destination: " + transactionPayload.getDestination());
-        System.out.println("amount: " + transactionPayload.getAmount());
-        System.out.println("author: " + transactionPayload.getAuthor());
         return transactionBeanService.getTransactionPreview(transactionPayload);
     }
 
     @POST
     @Path("apply")
     @Consumes("application/json")
-    public TransactionResponsePayLoad applyNewTransaction(@FormParam("source") Integer sourceID,
-                                    @FormParam("destination") Integer destinationID,
-                                    @FormParam("amount") Float amount,
-                                    @FormParam("comment") String comment,
-                                    @FormParam("author") String author) {
-        return transactionBeanService.getTransactionApply(sourceID, destinationID, amount, author);
+    public TransactionResponsePayLoad applyNewTransaction(TransactionPayload transactionPayload) {
+        return transactionBeanService.getTransactionApply(transactionPayload);
     }
 
     @POST
     @Path("validation")
     @Consumes("application/json")
-    public TransactionResponsePayLoad validationNewTransaction(@FormParam("transaction") Integer transactionID,
-                                         @FormParam("approve") Boolean approve,
-                                         @FormParam("author") String author) {
-        return transactionBeanService.getTransactionValidation(transactionID, approve, author);
+    public TransactionResponsePayLoad validationNewTransaction(TransactionPayload transactionPayload) {
+        return transactionBeanService.getTransactionValidation(transactionPayload);
     }
 }

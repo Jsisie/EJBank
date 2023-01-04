@@ -16,7 +16,7 @@ public interface TransactionBeanService {
 
     TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload);
 
-    TransactionResponsePayLoad getTransactionApply(Integer sourceID, Integer destinationID, Float amount, String author);
+    TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload);
 
-    TransactionResponsePayLoad getTransactionValidation(Integer transactionID, Boolean approve, String author);
+    TransactionResponsePayLoad getTransactionValidation(TransactionPayload transactionPayload);
 }
