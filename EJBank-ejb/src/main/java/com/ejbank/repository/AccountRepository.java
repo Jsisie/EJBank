@@ -19,12 +19,8 @@ public class AccountRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
-    private boolean isAdvisor(UserEntity user) {
-        return user instanceof AdvisorEntity;
-    }
-
     private Optional<List<CustomerEntity>> getCustomerOrAdvisor(UserEntity user, int id) {
-        if (isAdvisor(user)) {
+        if (Utils.isAdvisor(user)) {
             var advisor = em.find(AdvisorEntity.class, id);
             return Optional.of(new ArrayList<>(advisor.getCustomers()));
         } else if (user instanceof CustomerEntity)
@@ -37,7 +33,7 @@ public class AccountRepository {
         CustomerEntity customer;
         var user = em.find(UserEntity.class, userID);
         var customers = getCustomerOrAdvisor(user, userID).orElseThrow(IllegalArgumentException::new);
-        if (isAdvisor(user)) {
+        if (Utils.isAdvisor(user)) {
             account = customers.stream()
                     .map(CustomerEntity::getAccounts)
                     .flatMap(Collection::stream)

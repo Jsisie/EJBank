@@ -21,12 +21,8 @@ public class AccountsRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
-    private boolean isAdvisor(UserEntity user) {
-        return user instanceof AdvisorEntity;
-    }
-
     private Optional<List<CustomerEntity>> getCustomerOrAdvisor(UserEntity user, int id) {
-        if (isAdvisor(user)) {
+        if (Utils.isAdvisor(user)) {
             var advisor = em.find(AdvisorEntity.class, id);
             return Optional.of(new ArrayList<>(advisor.getCustomers()));
         } else if (user instanceof CustomerEntity)
@@ -36,7 +32,7 @@ public class AccountsRepository {
 
     public ListAccountsPayload getAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
-        if (isAdvisor(user))
+        if (Utils.isAdvisor(user))
             return new ListAccountsPayload("The User is not a Customer");
 
         var accountList = new ArrayList<AccountsPayload>();
@@ -52,7 +48,7 @@ public class AccountsRepository {
 
     public ListAccountsPayload getAttachedAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
-        if (!isAdvisor(user))
+        if (!Utils.isAdvisor(user))
             return new ListAccountsPayload("The User is not an advisor");
         var accountList = new ArrayList<AccountsPayload>();
         List<CustomerEntity> customers = getCustomerOrAdvisor(user, id).orElseThrow(IllegalArgumentException::new);
@@ -70,6 +66,6 @@ public class AccountsRepository {
 
     public ListAccountsPayload getAllAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
-        return isAdvisor(user)?getAttachedAccounts(id):getAccounts(id);
+        return Utils.isAdvisor(user)?getAttachedAccounts(id):getAccounts(id);
     }
 }
