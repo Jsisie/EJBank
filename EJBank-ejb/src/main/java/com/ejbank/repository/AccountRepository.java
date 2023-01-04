@@ -38,6 +38,9 @@ public class AccountRepository {
     public AccountPayload getAccount(Integer accountID, Integer userID) {
         // TODO - Incorrect + Disgusting
         var user = em.find(UserEntity.class, userID);
+        if (isAdvisor(user))
+            return new AccountPayload("The User is not a Customer");
+
         List<CustomerEntity> customers = getCustomerOrAdvisor(user, userID).orElseThrow(IllegalArgumentException::new);
         var customer = customers.get(0);
         var accounts = customer.getAccounts();
@@ -55,8 +58,7 @@ public class AccountRepository {
                 advisor.getLastname(),
                 account.getAccountType().getRate(),
                 account.getAccountType().getOverdraft(),
-                account.getBalance(),
-                ""
+                account.getBalance()
         );
     }
 }

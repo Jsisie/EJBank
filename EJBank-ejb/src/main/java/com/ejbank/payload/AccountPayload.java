@@ -10,12 +10,15 @@ public class AccountPayload {
 
     public AccountPayload(String ownerFirstName, String ownerLastName,
                           String advisorFirstName, String advisorLastName,
-                          Float rate, int interest, Float amount, String error) {
+                          Float rate, int interest, Float amount) {
         this.owner = ownerFirstName + " " + ownerLastName;
         this.advisor = advisorFirstName + " " + advisorLastName;
         this.rate = rate;
         this.interest = interest;
         this.amount = amount;
+    }
+
+    public AccountPayload(String error) {
         this.error = error;
     }
 

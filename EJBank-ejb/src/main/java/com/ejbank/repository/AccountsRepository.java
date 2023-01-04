@@ -38,7 +38,7 @@ public class AccountsRepository {
     public ListAccountsPayload getAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
         if (isAdvisor(user))
-            return new ListAccountsPayload(List.of(), "The User is not a Customer");
+            return new ListAccountsPayload("The User is not a Customer");
 
         var accountList = new ArrayList<AccountsPayload>();
         List<CustomerEntity> customers = getCustomerOrAdvisor(user, id).orElseThrow(IllegalArgumentException::new);
@@ -54,7 +54,7 @@ public class AccountsRepository {
     public ListAccountsPayload getAttachedAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
         if (!isAdvisor(user))
-            return new ListAccountsPayload(List.of(), "The User is not an advisor");
+            return new ListAccountsPayload("The User is not an advisor");
         var accountList = new ArrayList<AccountsPayload>();
         List<CustomerEntity> customers = getCustomerOrAdvisor(user, id).orElseThrow(IllegalArgumentException::new);
 
