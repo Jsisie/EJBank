@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Stateless
@@ -35,7 +34,6 @@ public class AccountRepository {
     }
 
     public AccountPayload getAccount(Integer accountID, Integer userID) {
-        // TODO - Incorrect + Disgusting
         var user = em.find(UserEntity.class, userID);
         if (isAdvisor(user))
             return new AccountPayload("The User is not a Customer");

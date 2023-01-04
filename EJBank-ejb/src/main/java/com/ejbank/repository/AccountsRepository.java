@@ -3,7 +3,6 @@ package com.ejbank.repository;
 import com.ejbank.entity.AdvisorEntity;
 import com.ejbank.entity.CustomerEntity;
 import com.ejbank.entity.UserEntity;
-import com.ejbank.payload.AccountPayload;
 import com.ejbank.payload.AccountsPayload;
 import com.ejbank.payload.ListAccountsPayload;
 
