@@ -1,6 +1,8 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.TransactionListPayload;
+import com.ejbank.payload.TransactionPayload;
+import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
 
 import javax.ejb.EJB;
@@ -38,8 +40,12 @@ public class TransactionAPI {
 
     @POST
     @Path("preview")
-    public void previewNewTransaction() {
-        
+    public void previewNewTransaction(TransactionPayload transactionPayload) {
+        System.out.println("source: " + transactionPayload.getSource());
+        System.out.println("destination: " + transactionPayload.getDestination());
+        System.out.println("amount: " + transactionPayload.getAmount());
+        System.out.println("author: " + transactionPayload.getAuthor());
+        //return transactionBeanService.
     }
 
     @POST
@@ -50,7 +56,11 @@ public class TransactionAPI {
 
     @POST
     @Path("validation")
-    public void validationNewTransaction() {
-
+    public void validationNewTransaction(@QueryParam("transaction") Integer transactionID,
+                                         @QueryParam("approve") Boolean decision,
+                                         @QueryParam("author") Integer userID) {
+        System.out.println("transaction: " + transactionID);
+        System.out.println("approve: " + decision);
+        System.out.println("author: " + userID);
     }
 }
