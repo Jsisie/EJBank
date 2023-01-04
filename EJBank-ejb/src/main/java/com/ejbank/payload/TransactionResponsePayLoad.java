@@ -2,12 +2,12 @@ package com.ejbank.payload;
 
 public class TransactionResponsePayLoad {
     private boolean result;
-    private int before;
-    private int after;
+    private float before;
+    private float after;
     private String message;
     private String error;
 
-    public TransactionResponsePayLoad(boolean result, int before, int after, String message) {
+    public TransactionResponsePayLoad(boolean result, float before, float after, String message) {
         this.result = result;
         this.before = before;
         this.after = after;
@@ -27,11 +27,11 @@ public class TransactionResponsePayLoad {
         return result;
     }
 
-    public int getBefore() {
+    public float getBefore() {
         return before;
     }
 
-    public int getAfter() {
+    public float getAfter() {
         return after;
     }
 

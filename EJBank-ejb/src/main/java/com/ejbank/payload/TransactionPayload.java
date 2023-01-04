@@ -7,8 +7,8 @@ import java.util.Date;
 public class TransactionPayload {
     private int id;
     private Date date;
-    private String source;
-    private String destination;
+    private Integer source;
+    private Integer destination;
     private UserEntity user;
     private Float amount;
     private Integer author;
@@ -19,8 +19,8 @@ public class TransactionPayload {
 
     public TransactionPayload(int id,
                               Date date,
-                              String source,
-                              String destination,
+                              Integer source,
+                              Integer destination,
                               UserEntity destinationUser,
                               Integer author,
                               String comment,
@@ -37,7 +37,7 @@ public class TransactionPayload {
         this.state = state;
     }
 
-    public TransactionPayload(String source,
+    public TransactionPayload(Integer source,
                               Float amount,
                               UserEntity destinationUser,
                               Integer author) {
@@ -55,11 +55,11 @@ public class TransactionPayload {
         return date;
     }
 
-    public String getSource() {
+    public Integer getSource() {
         return source;
     }
 
-    public String getDestination() {
+    public Integer getDestination() {
         return destination;
     }
 
@@ -75,9 +75,9 @@ public class TransactionPayload {
         return amount;
     }
 
-    public String getAuthor() {
+    public Integer getAuthor() {
         //return author.getFirstname() + " " + author.getLastname();
-        return author.toString();
+        return author;
     }
 
     public String getComment() {
@@ -100,11 +100,11 @@ public class TransactionPayload {
         this.date = date;
     }
 
-    public void setSource(String source) {
+    public void setSource(Integer source) {
         this.source = source;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Integer destination) {
         this.destination = destination;
     }
 

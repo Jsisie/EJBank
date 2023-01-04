@@ -36,8 +36,8 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     @Override
-    public TransactionResponsePayLoad getTransactionPreview(Integer sourceID, Integer destinationID, Float amount, String author) {
-        return transactionRepository.getTransactionPreview(sourceID, destinationID, amount, author);
+    public TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload) {
+        return transactionRepository.getTransactionPreview(transactionPayload);
     }
 
     @Override

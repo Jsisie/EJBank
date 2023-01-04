@@ -28,9 +28,13 @@ public class TransactionRepository {
         return user.getTransactions().stream().filter(transaction -> !transaction.getApplied()).toList().size();
     }
 
-    public TransactionResponsePayLoad getTransactionPreview(Integer sourceID, Integer destinationID, Float amount, String author) {
-        // TODO
-        return null;
+    public TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload) {
+
+        var account = em.find(AccountEntity.class, transactionPayload.getSource());
+        var destination = em.find(AccountEntity.class, transactionPayload.getDestination());
+        return account.getBalance() > transactionPayload.getAmount()?
+                new TransactionResponsePayLoad(true, account.getBalance() - transactionPayload.getAmount(), destination.getBalance() + transactionPayload.getAmount(), "Vous  disposez d'un solde suffisant"):
+                new TransactionResponsePayLoad(false, account.getBalance() - transactionPayload.getAmount(), destination.getBalance() + transactionPayload.getAmount(), "Vous ne disposez pas d'un solde suffisant...");
     }
 
     public TransactionResponsePayLoad getTransactionApply(Integer sourceID, Integer destinationID, Float amount, String author) {

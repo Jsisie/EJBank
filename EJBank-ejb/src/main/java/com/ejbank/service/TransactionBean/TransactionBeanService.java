@@ -14,7 +14,7 @@ public interface TransactionBeanService {
 
     Integer getNbTransactions(Integer userID);
 
-    TransactionResponsePayLoad getTransactionPreview(Integer sourceID, Integer destinationID, Float amount, String author);
+    TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload);
 
     TransactionResponsePayLoad getTransactionApply(Integer sourceID, Integer destinationID, Float amount, String author);
 

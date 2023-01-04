@@ -1,6 +1,7 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.TransactionListPayload;
+import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
 
@@ -39,12 +40,12 @@ public class TransactionAPI {
 
     @POST
     @Path("preview")
-    @Consumes("application/json")
-    public TransactionResponsePayLoad previewNewTransaction(@FormParam("source") Integer sourceID,
-                                                            @FormParam("destination") Integer destinationID,
-                                                            @FormParam("amount") Float amount,
-                                                            @FormParam("author") String author) {
-        return transactionBeanService.getTransactionPreview(sourceID, destinationID, amount, author);
+    public TransactionResponsePayLoad previewNewTransaction(TransactionPayload transactionPayload) {
+        System.out.println("source: " + transactionPayload.getSource());
+        System.out.println("destination: " + transactionPayload.getDestination());
+        System.out.println("amount: " + transactionPayload.getAmount());
+        System.out.println("author: " + transactionPayload.getAuthor());
+        return transactionBeanService.getTransactionPreview(transactionPayload);
     }
 
     @POST
