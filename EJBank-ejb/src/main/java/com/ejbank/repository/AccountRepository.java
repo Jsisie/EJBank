@@ -1,5 +1,6 @@
 package com.ejbank.repository;
 
+import com.ejbank.entity.AccountEntity;
 import com.ejbank.entity.AdvisorEntity;
 import com.ejbank.entity.CustomerEntity;
 import com.ejbank.entity.UserEntity;
@@ -9,9 +10,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Stateless
 @LocalBean
@@ -34,21 +33,33 @@ public class AccountRepository {
     }
 
     public AccountPayload getAccount(Integer accountID, Integer userID) {
+        AccountEntity account;
+        CustomerEntity customer;
         var user = em.find(UserEntity.class, userID);
-        if (isAdvisor(user))
-            return new AccountPayload("The User is not a Customer");
+        var customers = getCustomerOrAdvisor(user, userID).orElseThrow(IllegalArgumentException::new);
+        if (isAdvisor(user)) {
+            account = customers.stream()
+                    .map(CustomerEntity::getAccounts)
+                    .flatMap(Collection::stream)
+                    .filter(acc -> Objects.equals(acc.getId(), accountID))
+                    .findFirst()
+                    .orElse(null);
+            if (account == null)
+                return new AccountPayload("The account does not corresponds to a Customer for this Advisor");
+            customer = account.getCustomer();
+        } else {
+            customer = customers.get(0);
+            account = customer.getAccounts().stream()
+                    .filter(acc -> acc.getId() == accountID)
+                    .findFirst()
+                    .orElse(null);
+        }
 
-        List<CustomerEntity> customers = getCustomerOrAdvisor(user, userID).orElseThrow(IllegalArgumentException::new);
-        var customer = customers.get(0);
-        var accounts = customer.getAccounts();
-
-        var account = accounts.stream()
-                .filter(acc -> acc.getId() == accountID)
-                .findFirst()
-                .orElse(null);
-        if(account == null)
+        if (account == null)
             return new AccountPayload("Account ID provided doesn't exist");
+
         var advisor = customer.getAdvisor();
+
         return new AccountPayload(
                 customer.getFirstname(),
                 customer.getLastname(),
