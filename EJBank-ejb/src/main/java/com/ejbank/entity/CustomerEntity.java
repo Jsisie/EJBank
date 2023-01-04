@@ -15,14 +15,14 @@ public class CustomerEntity extends UserEntity implements Serializable {
     private List<AccountEntity> accounts;
     @ManyToOne
     @JoinColumn(name = "advisor_id", nullable = false)
-    private AdvisorEntity advisorId;
+    private AdvisorEntity advisor;
 
     public Integer getId() {
         return id;
     }
 
-    public AdvisorEntity getAdvisorId() {
-        return advisorId;
+    public AdvisorEntity getAdvisor() {
+        return advisor;
     }
 
     public List<AccountEntity> getAccounts() {

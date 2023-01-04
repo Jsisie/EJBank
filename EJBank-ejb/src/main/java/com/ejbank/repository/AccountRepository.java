@@ -4,8 +4,6 @@ import com.ejbank.entity.AdvisorEntity;
 import com.ejbank.entity.CustomerEntity;
 import com.ejbank.entity.UserEntity;
 import com.ejbank.payload.AccountPayload;
-import com.ejbank.payload.AccountsPayload;
-import com.ejbank.payload.ListAccountsPayload;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -13,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Stateless
@@ -49,8 +48,9 @@ public class AccountRepository {
                 .filter(acc -> acc.getId() == accountID)
                 .findFirst()
                 .orElse(null);
-
-        var advisor = em.find(AdvisorEntity.class, customer.getAdvisorId());
+        if(account == null)
+            return new AccountPayload("Account ID provided doesn't exist");
+        var advisor = customer.getAdvisor();
         return new AccountPayload(
                 customer.getFirstname(),
                 customer.getLastname(),
