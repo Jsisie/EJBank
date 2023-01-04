@@ -70,6 +70,6 @@ public class AccountsRepository {
 
     public ListAccountsPayload getAllAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
-        return isAdvisor(user)?getAccounts(id):getAttachedAccounts(id);
+        return isAdvisor(user)?getAttachedAccounts(id):getAccounts(id);
     }
 }
