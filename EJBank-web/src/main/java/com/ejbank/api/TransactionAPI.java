@@ -2,6 +2,7 @@ package com.ejbank.api;
 
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
+import com.ejbank.payload.TransactionRequestPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
 
@@ -40,7 +41,7 @@ public class TransactionAPI {
 
     @POST
     @Path("preview")
-    public TransactionResponsePayLoad previewNewTransaction(TransactionPayload transactionPayload) {
+    public TransactionResponsePayLoad previewNewTransaction(TransactionRequestPayload transactionPayload) {
         return transactionBeanService.getTransactionPreview(transactionPayload);
     }
 

@@ -2,6 +2,7 @@ package com.ejbank.service.TransactionBean;
 
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
+import com.ejbank.payload.TransactionRequestPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 
 import javax.ejb.Local;
@@ -14,7 +15,7 @@ public interface TransactionBeanService {
 
     Integer getNbTransactions(Integer userID);
 
-    TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload);
+    TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload);
 
     TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload);
 

@@ -4,6 +4,7 @@ import com.ejbank.entity.AccountEntity;
 import com.ejbank.entity.UserEntity;
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
+import com.ejbank.payload.TransactionRequestPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 
 import javax.ejb.LocalBean;
@@ -38,7 +39,7 @@ public class TransactionRepository {
         return new ListTransactionPayload(transactionsList.size(), transactionsList);
     }
 
-    public TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload) {
+    public TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload) {
         var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
         var destinationAccount = em.find(AccountEntity.class, transactionPayload.getDestination());
         return sourceAccount.getBalance() >= transactionPayload.getAmount() ?

@@ -2,6 +2,7 @@ package com.ejbank.service.TransactionBean;
 
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
+import com.ejbank.payload.TransactionRequestPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.repository.TransactionRepository;
 
@@ -35,7 +36,7 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     @Override
-    public TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload) {
+    public TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload) {
         return transactionRepository.getTransactionPreview(transactionPayload);
     }
 
