@@ -11,16 +11,18 @@ public class TransactionPayload {
     private String destination;
     private UserEntity user;
     private Float amount;
-    private UserEntity author;
+    private Integer author;
     private String comment;
     private State state;
+
+    public TransactionPayload(){}
 
     public TransactionPayload(int id,
                               Date date,
                               String source,
                               String destination,
                               UserEntity destinationUser,
-                              UserEntity author,
+                              Integer author,
                               String comment,
                               State state,
                               Float amount) {
@@ -38,7 +40,7 @@ public class TransactionPayload {
     public TransactionPayload(String source,
                               Float amount,
                               UserEntity destinationUser,
-                              UserEntity author) {
+                              Integer author) {
         this.source = source;
         this.amount = amount;
         this.user = destinationUser;
@@ -74,7 +76,8 @@ public class TransactionPayload {
     }
 
     public String getAuthor() {
-        return author.getFirstname() + " " + author.getLastname();
+        //return author.getFirstname() + " " + author.getLastname();
+        return author.toString();
     }
 
     public String getComment() {
@@ -87,5 +90,41 @@ public class TransactionPayload {
 
     public static enum State {
         APPLIED, TO_APPROVE, WAITING_APPROVE
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public void setAuthor(Integer author) {
+        this.author = author;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }
