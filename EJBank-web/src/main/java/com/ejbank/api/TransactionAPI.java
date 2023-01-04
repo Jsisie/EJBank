@@ -1,6 +1,7 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.TransactionListPayload;
+import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
 
 import javax.ejb.EJB;
@@ -39,21 +40,30 @@ public class TransactionAPI {
     @POST
     @Path("preview")
     @Consumes("application/json")
-    public void previewNewTransaction(@FormParam("source") Integer sourceID, @FormParam("destination") Integer destinationID, @FormParam("amount") Float amount, @FormParam("author") String author) {
-
+    public TransactionResponsePayLoad previewNewTransaction(@FormParam("source") Integer sourceID,
+                                                            @FormParam("destination") Integer destinationID,
+                                                            @FormParam("amount") Float amount,
+                                                            @FormParam("author") String author) {
+        return transactionBeanService.getTransactionPreview(sourceID, destinationID, amount, author);
     }
 
     @POST
     @Path("apply")
     @Consumes("application/json")
-    public void applyNewTransaction(@FormParam("source") Integer sourceID, @FormParam("destination") Integer destinationID, @FormParam("amount") Float amount, @FormParam("comment") String comment, @FormParam("author") String author) {
-
+    public TransactionResponsePayLoad applyNewTransaction(@FormParam("source") Integer sourceID,
+                                    @FormParam("destination") Integer destinationID,
+                                    @FormParam("amount") Float amount,
+                                    @FormParam("comment") String comment,
+                                    @FormParam("author") String author) {
+        return transactionBeanService.getTransactionApply(sourceID, destinationID, amount, author);
     }
 
     @POST
     @Path("validation")
     @Consumes("application/json")
-    public void validationNewTransaction(@FormParam("transaction") Integer transactionID, @FormParam("approve") Boolean approve, @FormParam("author") String author) {
-
+    public TransactionResponsePayLoad validationNewTransaction(@FormParam("transaction") Integer transactionID,
+                                         @FormParam("approve") Boolean approve,
+                                         @FormParam("author") String author) {
+        return transactionBeanService.getTransactionValidation(transactionID, approve, author);
     }
 }

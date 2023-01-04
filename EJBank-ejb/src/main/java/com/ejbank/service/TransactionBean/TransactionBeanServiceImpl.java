@@ -2,6 +2,7 @@ package com.ejbank.service.TransactionBean;
 
 import com.ejbank.payload.TransactionListPayload;
 import com.ejbank.payload.TransactionPayload;
+import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.repository.AccountRepository;
 import com.ejbank.repository.TransactionRepository;
 
@@ -32,6 +33,21 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     @Override
     public TransactionListPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
         return transactionRepository.getTransactionList(accountID, offset, userID);
+    }
+
+    @Override
+    public TransactionResponsePayLoad getTransactionPreview(Integer sourceID, Integer destinationID, Float amount, String author) {
+        return transactionRepository.getTransactionPreview(sourceID, destinationID, amount, author);
+    }
+
+    @Override
+    public TransactionResponsePayLoad getTransactionApply(Integer sourceID, Integer destinationID, Float amount, String author) {
+        return transactionRepository.getTransactionApply(sourceID, destinationID, amount, author);
+    }
+
+    @Override
+    public TransactionResponsePayLoad getTransactionValidation(Integer transactionID, Boolean approve, String author) {
+        return transactionRepository.getTransactionValidation(transactionID, approve, author);
     }
 
 
