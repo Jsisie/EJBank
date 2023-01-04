@@ -2,7 +2,7 @@ package com.ejbank.repository;
 
 import com.ejbank.entity.AccountEntity;
 import com.ejbank.entity.UserEntity;
-import com.ejbank.payload.TransactionListPayload;
+import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 
@@ -10,6 +10,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 
 @Stateless
 @LocalBean
@@ -18,13 +19,23 @@ public class TransactionRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
-    public TransactionListPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
-        return null;
-    }
-
     public Integer getNbTransactions(Integer userID) {
         var user = em.find(UserEntity.class, userID);
         return user.getTransactions().stream().filter(transaction -> !transaction.getApplied()).toList().size();
+    }
+
+    public ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
+        System.out.println("accountID = " + accountID + ", offset = " + offset + ", userID = " + userID); // TODO - remove sysout
+
+        var user = em.find(UserEntity.class, userID);
+        if (Utils.isAdvisor(user)) {
+
+        }
+        // TODO - CreateQuery here
+
+        var transactionsList = new ArrayList<TransactionPayload>();
+        transactionsList.add(new TransactionPayload());
+        return new ListTransactionPayload(transactionsList.size(), transactionsList);
     }
 
     public TransactionResponsePayLoad getTransactionPreview(TransactionPayload transactionPayload) {

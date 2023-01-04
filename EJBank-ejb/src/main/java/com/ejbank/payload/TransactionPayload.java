@@ -8,43 +8,39 @@ public class TransactionPayload {
     private int id;
     private Date date;
     private Integer source;
-    private Integer destination;
+    private String destinationName;
+    private String destinationUser;
     private UserEntity user;
     private Float amount;
-    private Integer author;
+    private String author;
     private String comment;
     private State state;
+
+    public static enum State {
+        APPLIED, TO_APPROVE, WAITING_APPROVE
+    }
 
     public TransactionPayload(){}
 
     public TransactionPayload(int id,
                               Date date,
                               Integer source,
-                              Integer destination,
-                              UserEntity destinationUser,
-                              Integer author,
+                              String destinationName,
+                              String destinationUserFirstName,
+                              String destinationUserLastName,
+                              Float amount,
+                              String author,
                               String comment,
-                              State state,
-                              Float amount) {
+                              State state) {
         this.id = id;
         this.date = date;
         this.source = source;
-        this.destination = destination;
-        this.user = destinationUser;
+        this.destinationName = destinationName;
+        this.destinationUser = destinationUserFirstName + " " + destinationUserLastName;
         this.amount = amount;
         this.author = author;
         this.comment = comment;
         this.state = state;
-    }
-
-    public TransactionPayload(Integer source,
-                              Float amount,
-                              UserEntity destinationUser,
-                              Integer author) {
-        this.source = source;
-        this.amount = amount;
-        this.user = destinationUser;
-        this.author = author;
     }
 
     public int getId() {
@@ -59,24 +55,23 @@ public class TransactionPayload {
         return source;
     }
 
-    public Integer getDestination() {
-        return destination;
+    public String getDestinationName() {
+        return destinationName;
     }
 
-    public String getDestination_user() {
-        return user.getFirstname() + " " + user.getLastname();
+    public String getDestinationUser() {
+        return destinationUser;
     }
 
-    public String getSource_user() {
-        return user.getFirstname() + " " + user.getLastname();
+    public UserEntity getUser() {
+        return user;
     }
 
     public Float getAmount() {
         return amount;
     }
 
-    public Integer getAuthor() {
-        //return author.getFirstname() + " " + author.getLastname();
+    public String getAuthor() {
         return author;
     }
 
@@ -86,45 +81,5 @@ public class TransactionPayload {
 
     public State getState() {
         return state;
-    }
-
-    public static enum State {
-        APPLIED, TO_APPROVE, WAITING_APPROVE
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setSource(Integer source) {
-        this.source = source;
-    }
-
-    public void setDestination(Integer destination) {
-        this.destination = destination;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
-    public void setAuthor(Integer author) {
-        this.author = author;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 }

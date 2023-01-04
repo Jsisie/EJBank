@@ -1,6 +1,6 @@
 package com.ejbank.api;
 
-import com.ejbank.payload.TransactionListPayload;
+import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
@@ -32,7 +32,7 @@ public class TransactionAPI {
 
     @GET
     @Path("/list/{account_id}/{offset}/{user_id}")
-    public TransactionListPayload getAllTransactionsFromAccountFromUserID(@PathParam("account_id") Integer accountID,
+    public ListTransactionPayload getAllTransactionsFromAccountFromUserID(@PathParam("account_id") Integer accountID,
                                                                           @PathParam("offset") Integer offset,
                                                                           @PathParam("user_id") Integer userID) {
         return transactionBeanService.getTransactionList(accountID, offset, userID);

@@ -1,9 +1,8 @@
 package com.ejbank.service.TransactionBean;
 
-import com.ejbank.payload.TransactionListPayload;
+import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
-import com.ejbank.repository.AccountRepository;
 import com.ejbank.repository.TransactionRepository;
 
 import javax.ejb.LocalBean;
@@ -31,7 +30,7 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     @Override
-    public TransactionListPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
+    public ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
         return transactionRepository.getTransactionList(accountID, offset, userID);
     }
 
