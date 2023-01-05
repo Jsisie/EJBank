@@ -22,7 +22,6 @@ import java.util.List;
 public class TransactionRepository {
     @EJB
     private RepositoryUtilsLocal utils;
-
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
@@ -79,11 +78,21 @@ public class TransactionRepository {
     public TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload) {
         var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
         var destinationAccount = em.find(AccountEntity.class, transactionPayload.getDestination());
+        if(sourceAccount == null)
+            return new TransactionResponsePayLoad("The source ID given does not correspond to your account");
+        if(destinationAccount == null)
+            return new TransactionResponsePayLoad("The destination ID given does not correspond to any destination account");
         return sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount() ?
-                new TransactionResponsePayLoad(true, sourceAccount.getBalance() - transactionPayload.getAmount(),
-                        destinationAccount.getBalance() + transactionPayload.getAmount(), "Vous  disposez d'un solde suffisant")
-                : new TransactionResponsePayLoad(false, sourceAccount.getBalance(),
-                destinationAccount.getBalance(), "Vous ne disposez pas d'un solde suffisant...");
+                new TransactionResponsePayLoad(
+                        true,
+                        sourceAccount.getBalance() - transactionPayload.getAmount(),
+                        destinationAccount.getBalance() + transactionPayload.getAmount(),
+                        "Vous  disposez d'un solde suffisant") :
+                new TransactionResponsePayLoad(
+                        false,
+                        sourceAccount.getBalance(),
+                        destinationAccount.getBalance(),
+                        "Vous ne disposez pas d'un solde suffisant...");
     }
 
     public TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload) {
