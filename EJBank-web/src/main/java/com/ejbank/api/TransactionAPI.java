@@ -55,7 +55,7 @@ public class TransactionAPI {
     @POST
     @Path("validation")
     @Consumes("application/json")
-    public TransactionResponsePayLoad validationNewTransaction(TransactionPayload transactionPayload) {
+    public TransactionResponsePayLoad validationNewTransaction(TransactionRequestPayload transactionPayload) {
         return transactionBeanService.getTransactionValidation(transactionPayload);
     }
 }

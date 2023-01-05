@@ -12,8 +12,10 @@ public class TransactionRequestPayload {
     private UserEntity user;
     private Float amount;
     private Integer author;
+    private Integer Transaction;
     private String comment;
     private State state;
+    private Boolean approve;
 
     public TransactionRequestPayload(){}
 
@@ -96,5 +98,25 @@ public class TransactionRequestPayload {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public Boolean getApprove() {
+        return approve;
+    }
+
+    public void setApprove(Boolean approve) {
+        this.approve = approve;
+    }
+
+    public Integer getTransaction() {
+        return Transaction;
+    }
+
+    public void setTransaction(Integer transaction) {
+        Transaction = transaction;
     }
 }

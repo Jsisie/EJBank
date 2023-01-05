@@ -15,6 +15,11 @@ public class UserRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public UserPayload getName(int id) {
         var user = em.find(UserEntity.class, id);
         return new UserPayload(user.getFirstname(), user.getLastname());

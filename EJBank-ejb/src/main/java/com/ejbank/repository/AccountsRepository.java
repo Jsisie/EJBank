@@ -23,6 +23,11 @@ public class AccountsRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ListAccountsPayload getAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
         if (utils.isAdvisor(user))
@@ -39,6 +44,11 @@ public class AccountsRepository {
         return new ListAccountsPayload(accountList);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ListAccountsPayload getAttachedAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
         if (!utils.isAdvisor(user))
@@ -57,6 +67,11 @@ public class AccountsRepository {
         return new ListAccountsPayload(accountList);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ListAccountsPayload getAllAccounts(Integer id) {
         var user = em.find(UserEntity.class, id);
         return utils.isAdvisor(user)?getAttachedAccounts(id):getAccounts(id);

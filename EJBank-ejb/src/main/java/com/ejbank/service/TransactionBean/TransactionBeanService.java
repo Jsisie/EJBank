@@ -19,5 +19,5 @@ public interface TransactionBeanService {
 
     TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload);
 
-    TransactionResponsePayLoad getTransactionValidation(TransactionPayload transactionPayload);
+    TransactionResponsePayLoad getTransactionValidation(TransactionRequestPayload transactionPayload);
 }

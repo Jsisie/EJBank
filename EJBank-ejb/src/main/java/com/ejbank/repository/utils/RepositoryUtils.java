@@ -16,11 +16,22 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
+    /**
+     *
+     * @param user
+     * @return
+     */
     @Override
     public boolean isAdvisor(UserEntity user) {
         return user instanceof AdvisorEntity;
     }
 
+    /**
+     *
+     * @param user
+     * @param id
+     * @return
+     */
     @Override
     public Optional<List<CustomerEntity>> getCustomerOrAdvisor(UserEntity user, int id) {
         if (user instanceof AdvisorEntity) {
@@ -31,6 +42,13 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
         else return Optional.empty();
     }
 
+    /**
+     *
+     * @param accountID
+     * @param userID
+     * @param user
+     * @return
+     */
     @Override
     public Optional<String> isAccountReattachedToUser(Integer accountID, Integer userID, UserEntity user) {
         var customers = getCustomerOrAdvisor(user, userID).orElse(null);
