@@ -20,7 +20,7 @@ public class AccountRepository {
     private EntityManager em;
 
     private Optional<List<CustomerEntity>> getCustomerOrAdvisor(UserEntity user, int id) {
-        if (Utils.isAdvisor(user)) {
+        if (user instanceof AdvisorEntity) {
             var advisor = em.find(AdvisorEntity.class, id);
             return Optional.of(new ArrayList<>(advisor.getCustomers()));
         } else if (user instanceof CustomerEntity)
@@ -32,7 +32,9 @@ public class AccountRepository {
         AccountEntity account;
         CustomerEntity customer;
         var user = em.find(UserEntity.class, userID);
-        var customers = getCustomerOrAdvisor(user, userID).orElseThrow(IllegalArgumentException::new);
+        var customers = getCustomerOrAdvisor(user, userID).orElse(null);
+        if(customers == null)
+            return new AccountPayload("The given ID does not correspond to any user");
         if (Utils.isAdvisor(user)) {
             account = customers.stream()
                     .map(CustomerEntity::getAccounts)

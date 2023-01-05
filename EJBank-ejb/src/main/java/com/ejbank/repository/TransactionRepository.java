@@ -1,6 +1,8 @@
 package com.ejbank.repository;
 
 import com.ejbank.entity.AccountEntity;
+import com.ejbank.entity.AdvisorEntity;
+import com.ejbank.entity.TransactionEntity;
 import com.ejbank.entity.UserEntity;
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
@@ -11,7 +13,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 @LocalBean
@@ -26,17 +30,43 @@ public class TransactionRepository {
     }
 
     public ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
-        System.out.println("accountID = " + accountID + ", offset = " + offset + ", userID = " + userID); // TODO - remove sysout
-
         var user = em.find(UserEntity.class, userID);
-        if (Utils.isAdvisor(user)) {
 
-        }
-        // TODO - CreateQuery here
+        int MAX_RESULTS = 5;
+        Query query = em.createQuery(
+                "SELECT t FROM TransactionEntity t " +
+                        "WHERE t.accountFrom.id = " + accountID + " " +
+                        "ORDER BY t.date DESC"
+        );
+        query.setFirstResult(offset);
+        query.setMaxResults(MAX_RESULTS);
+        List<TransactionEntity> transactions = query.getResultList();
+
+        query = em.createQuery("SELECT COUNT(t) FROM TransactionEntity t WHERE t.accountFrom.id = " + accountID);
+        long total = (Long) query.getSingleResult();
 
         var transactionsList = new ArrayList<TransactionPayload>();
-        transactionsList.add(new TransactionPayload());
-        return new ListTransactionPayload(transactionsList.size(), transactionsList);
+        transactions.forEach(transaction -> {
+            TransactionPayload.State state = transaction.getApplied() ?
+                    TransactionPayload.State.APPLIED :
+                    (user instanceof AdvisorEntity) ?
+                            TransactionPayload.State.TO_APPROVE :
+                            TransactionPayload.State.WAITING_APPROVE;
+
+            transactionsList.add(new TransactionPayload(
+                    transaction.getId(),
+                    transaction.getDate(),
+                    transaction.getAccountFrom().getAccountType().getName(),
+                    transaction.getAccountTo().getAccountType().getName(),
+                    transaction.getAccountTo().getCustomer().getFirstname(),
+                    transaction.getAmount(),
+                    transaction.getAccountFrom().getCustomer().getFirstname(),
+                    transaction.getAccountFrom().getCustomer().getLastname(),
+                    transaction.getComment(),
+                    state
+            ));
+        });
+        return new ListTransactionPayload(total, transactionsList);
     }
 
     public TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload) {
@@ -50,12 +80,12 @@ public class TransactionRepository {
     }
 
     public TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload) {
-        // TODO
+        // TODO - return TransactionResponsePayload
         return null;
     }
 
     public TransactionResponsePayLoad getTransactionValidation(TransactionPayload transactionPayload) {
-        // TODO
+        // TODO - return TransactionResponsePayload
         return null;
     }
 }

@@ -3,11 +3,11 @@ package com.ejbank.payload;
 import java.util.List;
 
 public class ListTransactionPayload {
-    private int total;
+    private long total;
     private List<TransactionPayload> transactions;
     private String error;
 
-    public ListTransactionPayload(int total, List<TransactionPayload> transactions) {
+    public ListTransactionPayload(long total, List<TransactionPayload> transactions) {
         this.total = total;
         this.transactions = transactions;
     }
@@ -16,7 +16,7 @@ public class ListTransactionPayload {
         this.error = error;
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 

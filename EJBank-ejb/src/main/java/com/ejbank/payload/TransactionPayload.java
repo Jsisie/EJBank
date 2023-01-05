@@ -7,9 +7,9 @@ import java.util.Date;
 public class TransactionPayload {
     private int id;
     private Date date;
-    private Integer source;
-    private String destinationName;
-    private String destinationUser;
+    private String source;
+    private String destination;
+    private String destination_user;
     private UserEntity user;
     private Float amount;
     private String author;
@@ -24,21 +24,21 @@ public class TransactionPayload {
 
     public TransactionPayload(int id,
                               Date date,
-                              Integer source,
-                              String destinationName,
+                              String sourceName,
+                              String destination,
                               String destinationUserFirstName,
-                              String destinationUserLastName,
                               Float amount,
-                              String author,
+                              String authorFirstName,
+                              String authorLastName,
                               String comment,
                               State state) {
         this.id = id;
         this.date = date;
-        this.source = source;
-        this.destinationName = destinationName;
-        this.destinationUser = destinationUserFirstName + " " + destinationUserLastName;
+        this.source = sourceName;
+        this.destination = destination;
+        this.destination_user = destinationUserFirstName;
         this.amount = amount;
-        this.author = author;
+        this.author = authorFirstName + " " + authorLastName;
         this.comment = comment;
         this.state = state;
     }
@@ -51,16 +51,16 @@ public class TransactionPayload {
         return date;
     }
 
-    public Integer getSource() {
+    public String getSource() {
         return source;
     }
 
-    public String getDestinationName() {
-        return destinationName;
+    public String getDestination() {
+        return destination;
     }
 
-    public String getDestinationUser() {
-        return destinationUser;
+    public String getDestination_user() {
+        return destination_user;
     }
 
     public UserEntity getUser() {
