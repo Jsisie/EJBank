@@ -28,6 +28,8 @@ public class TransactionRepository {
 
     public Integer getNbTransactions(Integer userID) {
         var user = em.find(UserEntity.class, userID);
+        if(!utils.isAdvisor(user))
+            return 0;
         return user.getTransactions().stream().filter(transaction -> !transaction.getApplied()).toList().size();
     }
 
@@ -78,7 +80,7 @@ public class TransactionRepository {
     public TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload) {
         var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
         var destinationAccount = em.find(AccountEntity.class, transactionPayload.getDestination());
-        return sourceAccount.getBalance() >= transactionPayload.getAmount() ?
+        return sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount() ?
                 new TransactionResponsePayLoad(true, sourceAccount.getBalance() - transactionPayload.getAmount(),
                         destinationAccount.getBalance() + transactionPayload.getAmount(), "Vous  disposez d'un solde suffisant")
                 : new TransactionResponsePayLoad(false, sourceAccount.getBalance(),
