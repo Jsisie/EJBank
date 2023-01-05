@@ -8,8 +8,9 @@ import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionRequestPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
+import com.ejbank.repository.utils.RepositoryUtilsLocal;
 
-import javax.ejb.LocalBean;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,8 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-@LocalBean
 public class TransactionRepository {
+    @EJB
+    private RepositoryUtilsLocal utils;
 
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
@@ -31,6 +33,10 @@ public class TransactionRepository {
 
     public ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
         var user = em.find(UserEntity.class, userID);
+
+        var returnError = utils.isAccountReattachedToUser(accountID, userID, user);
+        if (returnError.isPresent())
+            return new ListTransactionPayload(returnError.get());
 
         int MAX_RESULTS = 5;
         Query query = em.createQuery(
