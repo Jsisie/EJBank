@@ -28,9 +28,8 @@ public class TransactionRepository {
 
     public Integer getNbTransactions(Integer userID) {
         var user = em.find(UserEntity.class, userID);
-        if(!utils.isAdvisor(user))
-            return 0;
-        return user.getTransactions().stream().filter(transaction -> !transaction.getApplied()).toList().size();
+        return (!utils.isAdvisor(user)) ? 0 :
+                user.getTransactions().stream().filter(transaction -> !transaction.getApplied()).toList().size();
     }
 
     public ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
