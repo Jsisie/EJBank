@@ -54,7 +54,7 @@ public class AccountRepository {
         }
 
         if (account == null)
-            return new AccountPayload("Account ID provided doesn't exist");
+            return new AccountPayload("Account ID provided does not exist");
 
         var advisor = customer.getAdvisor();
 
