@@ -26,6 +26,7 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
         return user instanceof AdvisorEntity;
     }
 
+
     /**
      *
      * @param user

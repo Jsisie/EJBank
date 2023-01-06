@@ -1,9 +1,6 @@
 package com.ejbank.repository;
 
-import com.ejbank.entity.AccountEntity;
-import com.ejbank.entity.AdvisorEntity;
-import com.ejbank.entity.TransactionEntity;
-import com.ejbank.entity.UserEntity;
+import com.ejbank.entity.*;
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionRequestPayload;
@@ -127,9 +124,49 @@ public class TransactionRepository {
      * @param transactionPayload
      * @return
      */
-    public TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload) {
+    public TransactionResponsePayLoad getTransactionApply(TransactionRequestPayload transactionPayload) {
+        var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
+        var destinationAccount = em.find(AccountEntity.class, transactionPayload.getDestination());
+        var user = em.find(UserEntity.class, transactionPayload.getUser());
 
-        return null;
+        if (sourceAccount == null)
+            return new TransactionResponsePayLoad("The source ID given does not correspond to your account");
+        if (destinationAccount == null)
+            return new TransactionResponsePayLoad("The destination ID given does not correspond to any destination account");
+        if (user == null)
+            return new TransactionResponsePayLoad("The source ID given does not correspond to any user");
+
+        if (utils.isAdvisor(user)) {
+            //pas sur
+            Optional<String> returnError = utils.isAccountReattachedToUser(sourceAccount.getId(), user.getId(), user);
+            if (returnError.isPresent())
+                return new TransactionResponsePayLoad(returnError.get());
+            Optional<String> returnError2 = utils.isAccountReattachedToUser(destinationAccount.getId(), user.getId(), user);
+            if (returnError2.isPresent())
+                return new TransactionResponsePayLoad(returnError.get());
+            //
+            if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
+                //todo
+                return new TransactionResponsePayLoad(
+                        true,
+                        "Vous  disposez d'un solde suffisant");
+            } else {
+                return new TransactionResponsePayLoad(
+                        false,
+                        "Vous ne disposez pas d'un solde suffisant...");
+            }
+        } else if (sourceAccount.getCustomer() == destinationAccount.getCustomer() && sourceAccount.getCustomer().getId() == user.getId()){
+            if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
+                //todo
+                return new TransactionResponsePayLoad(
+                        true,
+                        "Vous  disposez d'un solde suffisant");
+            } else {
+                return new TransactionResponsePayLoad(
+                        false,
+                        "Vous ne disposez pas d'un solde suffisant...");
+            }
+        }
     }
 
     /**

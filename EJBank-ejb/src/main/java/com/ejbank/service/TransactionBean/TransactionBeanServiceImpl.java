@@ -41,7 +41,7 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     @Override
-    public TransactionResponsePayLoad getTransactionApply(TransactionPayload transactionPayload) {
+    public TransactionResponsePayLoad getTransactionApply(TransactionRequestPayload transactionPayload) {
         return transactionRepository.getTransactionApply(transactionPayload);
     }
 
