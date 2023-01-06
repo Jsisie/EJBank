@@ -13,7 +13,6 @@ import com.ejbank.repository.utils.RepositoryUtilsLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
@@ -33,8 +32,19 @@ public class TransactionRepository {
      */
     public Integer getNbTransactions(Integer userID) {
         var user = em.find(UserEntity.class, userID);
-        return (!utils.isAdvisor(user)) ? 0 :
-                user.getTransactions().stream().filter(transaction -> !transaction.getApplied()).toList().size();
+        if (!utils.isAdvisor(user))
+            return 0;
+        var advisor = em.find(AdvisorEntity.class, userID);
+        var customers = advisor.getCustomers();
+        int nbTransactionNotApplied = 0;
+        for (var customer : customers) {
+            nbTransactionNotApplied += customer.getAccounts().stream()
+                    .map(accountEntity -> accountEntity.getTransactionsFrom().stream()
+                            .filter(transaction -> !transaction.getApplied())
+                            .count())
+                    .reduce(0L, Long::sum);
+        }
+        return nbTransactionNotApplied;
     }
 
     /**
@@ -132,40 +142,40 @@ public class TransactionRepository {
 //        EntityTransaction tx = em.getTransaction();
 //        try {
 //            tx.begin();
-            UserEntity user = em.find(UserEntity.class, transactionPayload.getAuthor());
-            TransactionEntity transaction = em.find(TransactionEntity.class, transactionPayload.getTransaction());
-            if (transaction == null)
-                return new TransactionResponsePayLoad("The transaction ID given does not correspond to any transaction");
+        UserEntity user = em.find(UserEntity.class, transactionPayload.getAuthor());
+        TransactionEntity transaction = em.find(TransactionEntity.class, transactionPayload.getTransaction());
+        if (transaction == null)
+            return new TransactionResponsePayLoad("The transaction ID given does not correspond to any transaction");
 
-            var account = transaction.getAccountFrom();
-            if (account == null)
-                throw new IllegalStateException();
+        var account = transaction.getAccountFrom();
+        if (account == null)
+            throw new IllegalStateException();
 
-            if (!utils.isAdvisor(user))
-                return new TransactionResponsePayLoad("User is not an advisor");
+        if (!utils.isAdvisor(user))
+            return new TransactionResponsePayLoad("User is not an advisor");
 
-            Optional<String> returnError = utils.isAccountReattachedToUser(account.getId(), user.getId(), user);
-            if (returnError.isPresent())
-                return new TransactionResponsePayLoad(returnError.get());
+        Optional<String> returnError = utils.isAccountReattachedToUser(account.getId(), user.getId(), user);
+        if (returnError.isPresent())
+            return new TransactionResponsePayLoad(returnError.get());
 
-            if (!transactionPayload.getApprove()) {
-                em.createQuery("UPDATE TransactionEntity t SET t.applied = " + false + " WHERE t.id = :transactionId")
-                        .setParameter("transactionId", transaction.getId())
-                        .executeUpdate();
-                return new TransactionResponsePayLoad(false, "Transaction canceled.");
-            }
-
-            if (account.getBalance() + account.getAccountType().getOverdraft() <= transaction.getAmount())
-                return new TransactionResponsePayLoad(false, "Balance too low, transaction was not applied.");
-
-            em.createQuery("UPDATE TransactionEntity t SET t.applied = " + true + " WHERE t.id = :transactionId")
+        if (!transactionPayload.getApprove()) {
+            em.createQuery("UPDATE TransactionEntity t SET t.applied = " + false + " WHERE t.id = :transactionId")
                     .setParameter("transactionId", transaction.getId())
                     .executeUpdate();
+            return new TransactionResponsePayLoad(false, "Transaction canceled.");
+        }
 
-            em.createQuery("UPDATE AccountEntity a SET a.balance = a.balance - :amount WHERE a.id = :accountId")
-                    .setParameter("amount", transaction.getAmount())
-                    .setParameter("accountId", account.getId())
-                    .executeUpdate();
+        if (account.getBalance() + account.getAccountType().getOverdraft() <= transaction.getAmount())
+            return new TransactionResponsePayLoad(false, "Balance too low, transaction was not applied.");
+
+        em.createQuery("UPDATE TransactionEntity t SET t.applied = " + true + " WHERE t.id = :transactionId")
+                .setParameter("transactionId", transaction.getId())
+                .executeUpdate();
+
+        em.createQuery("UPDATE AccountEntity a SET a.balance = a.balance - :amount WHERE a.id = :accountId")
+                .setParameter("amount", transaction.getAmount())
+                .setParameter("accountId", account.getId())
+                .executeUpdate();
 //            tx.commit();
 //        } catch (Exception e) {
 //            tx.rollback();
