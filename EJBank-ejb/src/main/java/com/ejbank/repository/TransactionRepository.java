@@ -1,6 +1,9 @@
 package com.ejbank.repository;
 
-import com.ejbank.entity.*;
+import com.ejbank.entity.AccountEntity;
+import com.ejbank.entity.AdvisorEntity;
+import com.ejbank.entity.TransactionEntity;
+import com.ejbank.entity.UserEntity;
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionRequestPayload;
@@ -155,7 +158,7 @@ public class TransactionRepository {
                         false,
                         "Vous ne disposez pas d'un solde suffisant...");
             }
-        } else if (sourceAccount.getCustomer() == destinationAccount.getCustomer() && sourceAccount.getCustomer().getId() == user.getId()){
+        } else if (sourceAccount.getCustomer() == destinationAccount.getCustomer() && sourceAccount.getCustomer().getId() == user.getId()) {
             if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
                 //todo
                 return new TransactionResponsePayLoad(
@@ -177,9 +180,6 @@ public class TransactionRepository {
      * @return
      */
     public TransactionResponsePayLoad getTransactionValidation(TransactionRequestPayload transactionPayload) {
-//        EntityTransaction tx = em.getTransaction();
-//        try {
-//            tx.begin();
         UserEntity user = em.find(UserEntity.class, transactionPayload.getAuthor());
         TransactionEntity transaction = em.find(TransactionEntity.class, transactionPayload.getTransaction());
         if (transaction == null)
@@ -214,11 +214,6 @@ public class TransactionRepository {
                 .setParameter("amount", transaction.getAmount())
                 .setParameter("accountId", account.getId())
                 .executeUpdate();
-//            tx.commit();
-//        } catch (Exception e) {
-//            tx.rollback();
-//            return new TransactionResponsePayLoad("An error occurred and the transaction could not be applied");
-//        }
         return new TransactionResponsePayLoad(true, "Transaction applied.");
     }
 }
