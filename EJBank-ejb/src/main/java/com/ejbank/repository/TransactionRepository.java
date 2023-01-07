@@ -167,6 +167,8 @@ public class TransactionRepository {
 
         var beforeBalance = sourceAccount.getBalance();
         var comment = transactionPayload.getComment();
+        if(comment.length() > 255)
+            return new TransactionResponsePayLoad("Your comment must be lower than 255 characters");
 
         var transaction = new TransactionEntity();
         transaction.setAmount(amount);
