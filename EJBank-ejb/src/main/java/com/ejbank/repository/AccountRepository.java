@@ -32,7 +32,7 @@ public class AccountRepository {
         AccountEntity account;
         CustomerEntity customer;
         var user = em.find(UserEntity.class, userID);
-        var customers = utils.getCustomerOrAdvisor(user, userID).orElse(null);
+        var customers = utils.getCustomersFromUser(user, userID).orElse(null);
         if(customers == null)
             return new AccountPayload("The given ID does not correspond to any user");
 

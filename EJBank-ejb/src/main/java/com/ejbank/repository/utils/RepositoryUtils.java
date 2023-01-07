@@ -26,7 +26,6 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
         return user instanceof AdvisorEntity;
     }
 
-
     /**
      *
      * @param user
@@ -34,7 +33,7 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
      * @return
      */
     @Override
-    public Optional<List<CustomerEntity>> getCustomerOrAdvisor(UserEntity user, int id) {
+    public Optional<List<CustomerEntity>> getCustomersFromUser(UserEntity user, int id) {
         if (user instanceof AdvisorEntity) {
             var advisor = em.find(AdvisorEntity.class, id);
             return Optional.of(new ArrayList<>(advisor.getCustomers()));
@@ -52,7 +51,7 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
      */
     @Override
     public Optional<String> isAccountReattachedToUser(Integer accountID, Integer userID, UserEntity user) {
-        var customers = getCustomerOrAdvisor(user, userID).orElse(null);
+        var customers = getCustomersFromUser(user, userID).orElse(null);
         AccountEntity account;
         CustomerEntity customer;
 

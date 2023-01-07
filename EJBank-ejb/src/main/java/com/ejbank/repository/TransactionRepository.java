@@ -1,9 +1,6 @@
 package com.ejbank.repository;
 
-import com.ejbank.entity.AccountEntity;
-import com.ejbank.entity.AdvisorEntity;
-import com.ejbank.entity.TransactionEntity;
-import com.ejbank.entity.UserEntity;
+import com.ejbank.entity.*;
 import com.ejbank.payload.ListTransactionPayload;
 import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionRequestPayload;
@@ -16,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +61,8 @@ public class TransactionRepository {
         int MAX_RESULTS = 5;
         Query query = em.createQuery(
                 "SELECT t FROM TransactionEntity t " +
-                        "WHERE t.accountFrom.id = " + accountID + " " +
+                        "WHERE (t.accountFrom.id = " + accountID + " " +
+                        "OR t.accountTo.id = " + accountID + " ) " +
                         "ORDER BY t.date DESC"
         );
         query.setFirstResult(offset);
@@ -130,7 +129,8 @@ public class TransactionRepository {
     public TransactionResponsePayLoad getTransactionApply(TransactionRequestPayload transactionPayload) {
         var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
         var destinationAccount = em.find(AccountEntity.class, transactionPayload.getDestination());
-        var user = em.find(UserEntity.class, transactionPayload.getUser());
+        var user = em.find(UserEntity.class, transactionPayload.getAuthor());
+        var amount = transactionPayload.getAmount();
 
         if (sourceAccount == null)
             return new TransactionResponsePayLoad("The source ID given does not correspond to your account");
@@ -139,38 +139,56 @@ public class TransactionRepository {
         if (user == null)
             return new TransactionResponsePayLoad("The source ID given does not correspond to any user");
 
+        if (amount < 0)
+            return new TransactionResponsePayLoad("Amount must be superior than 0");
+
         if (utils.isAdvisor(user)) {
-            //pas sur
-            Optional<String> returnError = utils.isAccountReattachedToUser(sourceAccount.getId(), user.getId(), user);
-            if (returnError.isPresent())
-                return new TransactionResponsePayLoad(returnError.get());
-            Optional<String> returnError2 = utils.isAccountReattachedToUser(destinationAccount.getId(), user.getId(), user);
-            if (returnError2.isPresent())
-                return new TransactionResponsePayLoad(returnError.get());
-            //
-            if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
-                //todo
-                return new TransactionResponsePayLoad(
-                        true,
-                        "Vous  disposez d'un solde suffisant");
-            } else {
-                return new TransactionResponsePayLoad(
-                        false,
-                        "Vous ne disposez pas d'un solde suffisant...");
-            }
-        } else if (sourceAccount.getCustomer() == destinationAccount.getCustomer() && sourceAccount.getCustomer().getId() == user.getId()) {
-            if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
-                //todo
-                return new TransactionResponsePayLoad(
-                        true,
-                        "Vous  disposez d'un solde suffisant");
-            } else {
-                return new TransactionResponsePayLoad(
-                        false,
-                        "Vous ne disposez pas d'un solde suffisant...");
-            }
+            var advisor = (AdvisorEntity) user;
+            var customers = advisor.getCustomers();
+            if (!customers.contains(sourceAccount.getCustomer()) || !customers.contains(destinationAccount.getCustomer()))
+                return new TransactionResponsePayLoad("You're not allowed to perform a transaction with an account that does not belong to any of your customer");
+        } else {
+            var customer = (CustomerEntity) user;
+            if (sourceAccount.getCustomer() != customer || destinationAccount.getCustomer() != customer)
+                return new TransactionResponsePayLoad("You're not allowed to perform a transaction with an account that does not belong to you");
         }
-        return null;
+
+        if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() < transactionPayload.getAmount())
+            return new TransactionResponsePayLoad("The amount of the transaction is too high for your account");
+
+        var beforeBalance = sourceAccount.getBalance();
+        var comment = transactionPayload.getComment();
+
+        var transaction = new TransactionEntity();
+        transaction.setAmount(amount);
+        transaction.setAccountFrom(sourceAccount);
+        transaction.setAccountTo(destinationAccount);
+        transaction.setAuthor(user);
+        transaction.setComment(comment);
+        transaction.setDate(new Date());
+
+        if (!utils.isAdvisor(user) && amount > 1000) {
+            transaction.setApplied(false);
+            em.persist(transaction);
+            return new TransactionResponsePayLoad(false, beforeBalance, beforeBalance, "Transaction create and applied");
+        }
+
+        transaction.setApplied(true);
+        em.persist(transaction);
+
+        // Subtract the amount value to the source balance
+        em.createQuery("UPDATE AccountEntity a SET a.balance = a.balance - :amount WHERE a.id = :accountId")
+                .setParameter("amount", transaction.getAmount())
+                .setParameter("accountId", sourceAccount.getId())
+                .executeUpdate();
+
+        // Add the amount value to the destination balance
+        em.createQuery("UPDATE AccountEntity a SET a.balance = a.balance + :amount WHERE a.id = :accountId")
+                .setParameter("amount", transaction.getAmount())
+                .setParameter("accountId", destinationAccount.getId())
+                .executeUpdate();
+
+        return new TransactionResponsePayLoad(true, beforeBalance, beforeBalance - amount, "Transaction create and applied");
     }
 
     /**
@@ -185,35 +203,45 @@ public class TransactionRepository {
         if (transaction == null)
             return new TransactionResponsePayLoad("The transaction ID given does not correspond to any transaction");
 
-        var account = transaction.getAccountFrom();
-        if (account == null)
+        var sourceAccount = transaction.getAccountFrom();
+        var destinationAccount = transaction.getAccountTo();
+        if (sourceAccount == null || destinationAccount == null)
             throw new IllegalStateException();
 
         if (!utils.isAdvisor(user))
             return new TransactionResponsePayLoad("User is not an advisor");
 
-        Optional<String> returnError = utils.isAccountReattachedToUser(account.getId(), user.getId(), user);
+        Optional<String> returnError = utils.isAccountReattachedToUser(sourceAccount.getId(), user.getId(), user);
         if (returnError.isPresent())
             return new TransactionResponsePayLoad(returnError.get());
 
         if (!transactionPayload.getApprove()) {
-            em.createQuery("UPDATE TransactionEntity t SET t.applied = " + false + " WHERE t.id = :transactionId")
+            em.createQuery("UPDATE TransactionEntity t SET t.applied = " + true + " WHERE t.id = :transactionId")
                     .setParameter("transactionId", transaction.getId())
                     .executeUpdate();
-            return new TransactionResponsePayLoad(false, "Transaction canceled.");
+            return new TransactionResponsePayLoad(true, "Transaction canceled.");
         }
 
-        if (account.getBalance() + account.getAccountType().getOverdraft() <= transaction.getAmount())
+        if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() <= transaction.getAmount())
             return new TransactionResponsePayLoad(false, "Balance too low, transaction was not applied.");
 
+        // Set the applied field to true
         em.createQuery("UPDATE TransactionEntity t SET t.applied = " + true + " WHERE t.id = :transactionId")
                 .setParameter("transactionId", transaction.getId())
                 .executeUpdate();
 
+        // Subtract the amount value to the source balance
         em.createQuery("UPDATE AccountEntity a SET a.balance = a.balance - :amount WHERE a.id = :accountId")
                 .setParameter("amount", transaction.getAmount())
-                .setParameter("accountId", account.getId())
+                .setParameter("accountId", sourceAccount.getId())
                 .executeUpdate();
+
+        // Add the amount value to the destination balance
+        em.createQuery("UPDATE AccountEntity a SET a.balance = a.balance + :amount WHERE a.id = :accountId")
+                .setParameter("amount", transaction.getAmount())
+                .setParameter("accountId", destinationAccount.getId())
+                .executeUpdate();
+
         return new TransactionResponsePayLoad(true, "Transaction applied.");
     }
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class TransactionPayload {
     private int id;
-    private Date date;
+    private String date;
     private String source;
     private String destination;
     private String destination_user;
@@ -33,7 +33,7 @@ public class TransactionPayload {
                               String comment,
                               State state) {
         this.id = id;
-        this.date = date;
+        this.date = date.toString();;
         this.source = sourceName;
         this.destination = destination;
         this.destination_user = destinationUserFirstName;
@@ -47,7 +47,7 @@ public class TransactionPayload {
         return id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
