@@ -62,49 +62,8 @@ public class AccountRepository {
         }
         var advisor = customer.getAdvisor();
 
-        List<Double> monthlyInterestRates = new ArrayList<>();
-        var year = Year.now().getValue();
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR,year);
-        cal.set(Calendar.MONTH, Calendar.JANUARY);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
+        var interest = utils.getInterest(account);
 
-        Date startOfYear = cal.getTime();
-        while (cal.get(Calendar.YEAR) == year) {
-            // Calculate the balance at the start of the month
-            double balance = account.getBalance();
-            Query queryFrom = em.createQuery("SELECT t FROM TransactionEntity t WHERE t.accountFrom = :account AND t.date < :startOfMonth");
-            queryFrom.setParameter("account", account);
-            queryFrom.setParameter("startOfMonth", cal.getTime());
-            List<TransactionEntity> transactionsFrom = queryFrom.getResultList();
-            for (TransactionEntity t : transactionsFrom) {
-                balance += t.getAmount();
-            }
-            Query queryTo = em.createQuery("SELECT t FROM TransactionEntity t WHERE t.accountTo = :account AND t.date < :startOfMonth");
-            queryTo.setParameter("account", account);
-            queryTo.setParameter("startOfMonth", cal.getTime());
-            List<TransactionEntity> transactionsTo = queryFrom.getResultList();
-            for (TransactionEntity t : transactionsTo) {
-                balance -= t.getAmount();
-            }
-
-            // Calculate the interest for the month
-            double interestRate = account.getAccountType().getRate() / 12;
-            double interest = balance * interestRate;
-            monthlyInterestRates.add(interest);
-
-            // Move to the next month
-            cal.add(Calendar.MONTH, 1);
-        }
-        double sum = 0;
-        for (double rate : monthlyInterestRates) {
-            sum += rate;
-        }
-        double interest = sum/ monthlyInterestRates.size();
         return new AccountPayload(
                 customer.getFirstname(),
                 customer.getLastname(),

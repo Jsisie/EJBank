@@ -20,8 +20,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="EJBank-ejb" options="-endorseddirs $PROJECT_DIR$/EJBank-ejb/target/endorsed" />
-      <module name="EJBank-web" options="-endorseddirs $PROJECT_DIR$/EJBank-web/target/endorsed" />
+      <module name="EJBank-ejb" options="-endorseddirs D:\Programs\Java\JEE\EJBank\EJBank-ejb\target/endorsed" />
+      <module name="EJBank-web" options="-endorseddirs D:\Programs\Java\JEE\EJBank\EJBank-web\target/endorsed" />
     </option>
   </component>
 </project>
