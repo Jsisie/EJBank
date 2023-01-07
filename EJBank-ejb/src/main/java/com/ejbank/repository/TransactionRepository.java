@@ -25,8 +25,11 @@ public class TransactionRepository {
     private EntityManager em;
 
     /**
-     * @param userID
-     * @return
+     * Takes an advisor's ID as a parameter and returns the number of customer transactions he has yet to apply.
+     * If the provided id is not an advisor's, the method returns 0.
+     *
+     * @param userID the ID of the advisor whose transactions will be counted. (Integer)
+     * @return The number of yet-to-be-applied transactions of his customers, or 0 if userId is not an advisor's. (int)
      */
     public Integer getNbTransactions(Integer userID) {
         var user = em.find(UserEntity.class, userID);
@@ -46,10 +49,12 @@ public class TransactionRepository {
     }
 
     /**
-     * @param accountID
-     * @param offset
-     * @param userID
-     * @return
+     * Returns a list of transactions going to and from a customer's account from a given offset (ids).
+     *
+     * @param accountID The account from which the transactions are going to get retrieved from. (Integer)
+     * @param offset  Delays the number of the first transaction that is retrieved. (Integer)
+     * @param userID The user id used to check if the specified account belongs to it. (Integer)
+     * @return a ListTransactionPayload which contains a list of the user's transactions from a certain offset.
      */
     public ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID) {
         var user = em.find(UserEntity.class, userID);
@@ -97,8 +102,11 @@ public class TransactionRepository {
     }
 
     /**
-     * @param transactionPayload
-     * @return
+     * Tells informations about a transaction request, whether source balance is high enough or not,
+     * or if the source ID or destination ID are not valid.
+     *
+     * @param transactionPayload The transaction request to check (TransactionRequestPayload)
+     * @return a response based on the transaction's status. (TransactionResponsePayload)
      */
     public TransactionResponsePayLoad getTransactionPreview(TransactionRequestPayload transactionPayload) {
         var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
@@ -123,8 +131,9 @@ public class TransactionRepository {
     /**
      * Create a new transaction that can either be validated or not
      *
-     * @param transactionPayload
-     * @return
+     * @param transactionPayload the request for a transaction to apply (TransactionRequestPayload)
+     * @return a transaction response after applying (substracting an amount in an account and putting it in another)
+     * (or not) the transaction. (TransactionResponsePayLoad)
      */
     public TransactionResponsePayLoad getTransactionApply(TransactionRequestPayload transactionPayload) {
         var sourceAccount = em.find(AccountEntity.class, transactionPayload.getSource());
@@ -192,10 +201,12 @@ public class TransactionRepository {
     }
 
     /**
-     * Validate a transaction for an Advisor
+     * Validate a transaction for an Advisor. A transaction has to be validated by an advisor if the amount transfered
+     * is superior to 1000€.
      *
-     * @param transactionPayload
-     * @return
+     * @param transactionPayload a Transaction request that has to be validated by an advisor
+     * @return A transaction response after validating or not (and then applying or not) the requested transaction
+     * (TransactionResponsePayLoad)
      */
     public TransactionResponsePayLoad getTransactionValidation(TransactionRequestPayload transactionPayload) {
         UserEntity user = em.find(UserEntity.class, transactionPayload.getAuthor());
