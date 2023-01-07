@@ -22,13 +22,20 @@ public class AccountRepository {
     @PersistenceContext(unitName = "EJBankPU")
     private EntityManager em;
 
+    /**
+     *
+     * @param accountID
+     * @param userID
+     * @return
+     */
     public AccountPayload getAccount(Integer accountID, Integer userID) {
         AccountEntity account;
         CustomerEntity customer;
         var user = em.find(UserEntity.class, userID);
-        var customers = utils.getCustomerOrAdvisor(user, userID).orElse(null);
+        var customers = utils.getCustomersFromUser(user, userID).orElse(null);
         if(customers == null)
             return new AccountPayload("The given ID does not correspond to any user");
+
         if (utils.isAdvisor(user)) {
             account = customers.stream()
                     .map(CustomerEntity::getAccounts)
@@ -49,13 +56,14 @@ public class AccountRepository {
                 return new AccountPayload("The account does not corresponds to any of yours");
         }
         var advisor = customer.getAdvisor();
+        int interest = 0; // TODO - process the interest
         return new AccountPayload(
                 customer.getFirstname(),
                 customer.getLastname(),
                 advisor.getFirstname(),
                 advisor.getLastname(),
                 account.getAccountType().getRate(),
-                account.getAccountType().getOverdraft(),
+                interest,
                 account.getBalance()
         );
     }

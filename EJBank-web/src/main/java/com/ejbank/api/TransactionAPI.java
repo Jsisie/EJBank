@@ -41,21 +41,21 @@ public class TransactionAPI {
 
     @POST
     @Path("preview")
-    public TransactionResponsePayLoad previewNewTransaction(TransactionRequestPayload transactionPayload) {
-        return transactionBeanService.getTransactionPreview(transactionPayload);
+    public TransactionResponsePayLoad previewNewTransaction(TransactionRequestPayload transactionRequestPayload) {
+        return transactionBeanService.getTransactionPreview(transactionRequestPayload);
     }
 
     @POST
     @Path("apply")
     @Consumes("application/json")
-    public TransactionResponsePayLoad applyNewTransaction(TransactionPayload transactionPayload) {
-        return transactionBeanService.getTransactionApply(transactionPayload);
+    public TransactionResponsePayLoad applyNewTransaction(TransactionRequestPayload transactionRequestPayload) {
+        return transactionBeanService.getTransactionApply(transactionRequestPayload);
     }
 
     @POST
     @Path("validation")
     @Consumes("application/json")
-    public TransactionResponsePayLoad validationNewTransaction(TransactionRequestPayload transactionPayload) {
-        return transactionBeanService.getTransactionValidation(transactionPayload);
+    public TransactionResponsePayLoad validationNewTransaction(TransactionRequestPayload transactionRequestPayload) {
+        return transactionBeanService.getTransactionValidation(transactionRequestPayload);
     }
 }

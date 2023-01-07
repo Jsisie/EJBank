@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface RepositoryUtilsLocal {
 
     boolean isAdvisor(UserEntity user);
-    Optional<List<CustomerEntity>> getCustomerOrAdvisor(UserEntity user, int id);
+    Optional<List<CustomerEntity>> getCustomersFromUser(UserEntity user, int id);
     Optional<String> isAccountReattachedToUser(Integer accountID, Integer userID, UserEntity user);
 }

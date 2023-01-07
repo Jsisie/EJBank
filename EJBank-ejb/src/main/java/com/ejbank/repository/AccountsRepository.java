@@ -34,7 +34,9 @@ public class AccountsRepository {
             return new ListAccountsPayload("The User is not a Customer");
 
         var accountList = new ArrayList<AccountsPayload>();
-        List<CustomerEntity> customers = utils.getCustomerOrAdvisor(user, id).orElseThrow(IllegalArgumentException::new);
+        List<CustomerEntity> customers = utils.getCustomersFromUser(user, id).orElse(null);
+        if(customers == null)
+            return new ListAccountsPayload("The given ID does not correspond to any user");
 
         customers.forEach(customer -> customer.getAccounts().forEach(account -> accountList.add(new AccountsPayload(
                 account.getId(),
@@ -54,7 +56,9 @@ public class AccountsRepository {
         if (!utils.isAdvisor(user))
             return new ListAccountsPayload("The User is not an advisor");
         var accountList = new ArrayList<AccountsPayload>();
-        List<CustomerEntity> customers = utils.getCustomerOrAdvisor(user, id).orElseThrow(IllegalArgumentException::new);
+        List<CustomerEntity> customers = utils.getCustomersFromUser(user, id).orElse(null);
+        if(customers == null)
+            return new ListAccountsPayload("The given ID does not correspond to any user");
 
         customers.forEach(customer -> customer.getAccounts().forEach(account -> accountList.add(new AccountsPayload(
                 account.getId(),

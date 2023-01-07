@@ -1,7 +1,7 @@
 package com.ejbank.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "ejbank_transaction")
@@ -24,7 +24,8 @@ public class TransactionEntity {
     private String comment;
     @Column(name = "applied", nullable = false)
     private Boolean applied;
-    @Column(name = "date", nullable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date", nullable=false)
     private Date date;
 
     public TransactionEntity() {
@@ -57,8 +58,39 @@ public class TransactionEntity {
     public Boolean getApplied() {
         return applied;
     }
-
     public Date getDate() {
         return date;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAccountFrom(AccountEntity accountFrom) {
+        this.accountFrom = accountFrom;
+    }
+
+    public void setAccountTo(AccountEntity accountTo) {
+        this.accountTo = accountTo;
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setApplied(Boolean applied) {
+        this.applied = applied;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
