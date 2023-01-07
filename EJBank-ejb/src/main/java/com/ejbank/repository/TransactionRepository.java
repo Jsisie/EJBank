@@ -102,7 +102,7 @@ public class TransactionRepository {
     }
 
     /**
-     * Tells informations about a transaction request, whether source balance is high enough or not,
+     * Tells information about a transaction request, whether source balance is high enough or not,
      * or if the source ID or destination ID are not valid.
      *
      * @param transactionPayload The transaction request to check (TransactionRequestPayload)
@@ -152,51 +152,6 @@ public class TransactionRepository {
             return new TransactionResponsePayLoad("Amount must be superior than 0");
 
         if (utils.isAdvisor(user)) {
-
-            //pas sur
-            Optional<String> returnError = utils.isAccountReattachedToUser(sourceAccount.getId(), user.getId(), user);
-            if (returnError.isPresent())
-                return new TransactionResponsePayLoad(returnError.get());
-            Optional<String> returnError2 = utils.isAccountReattachedToUser(destinationAccount.getId(), user.getId(), user);
-            if (returnError2.isPresent())
-                return new TransactionResponsePayLoad(returnError.get());
-            //
-            if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
-                //todo
-                 var query = em.createQuery("INSERT INTO Transaction (account_id_from, account_id_to, author, amount, comment, applied, date) VALUES (:accountIdFrom, :accountIdTo, :author, :amount, :comment, :applied, :date)");
-                 query.setParameter("accountIdFrom", sourceAccount.getId());
-                 query.setParameter("accountIdTo", destinationAccount.getId());
-                 query.setParameter("author", user.getId());
-                 query.setParameter("amount", transactionPayload.getAmount());
-                 query.setParameter("comment", transactionPayload.getComment());
-                 query.setParameter("applied", true);
-                 query.setParameter("date", new Date(System.currentTimeMillis()));
-                 query.executeUpdate();
-
-                 var query2 = em.createQuery("UPDATE Account SET customer_id, account_type_id, balance) VALUES (:customerId, :accountTypeId, balance)");
-                 query2.setParameter("customerId", sourceAccount.getCustomer());
-                 query2.setParameter("accountTypeId", sourceAccount.getAccountType());
-                 query2.setParameter("balance", sourceAccount.getBalance() - transactionPayload.getAmount())
-                return new TransactionResponsePayLoad(
-                        true,
-                        "Vous  disposez d'un solde suffisant");
-            } else {
-                return new TransactionResponsePayLoad(
-                        false,
-                        "Vous ne disposez pas d'un solde suffisant...");
-            }
-        } else if (sourceAccount.getCustomer() == destinationAccount.getCustomer() && sourceAccount.getCustomer().getId() == user.getId()){
-            if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
-                //todo
-                return new TransactionResponsePayLoad(
-                        true,
-                        "Vous  disposez d'un solde suffisant");
-            } else {
-                return new TransactionResponsePayLoad(
-                        false,
-                        "Vous ne disposez pas d'un solde suffisant...");
-            }
-
             var advisor = (AdvisorEntity) user;
             var customers = advisor.getCustomers();
             if (!customers.contains(sourceAccount.getCustomer()) || !customers.contains(destinationAccount.getCustomer()))
@@ -225,7 +180,6 @@ public class TransactionRepository {
             transaction.setApplied(false);
             em.persist(transaction);
             return new TransactionResponsePayLoad(false, beforeBalance, beforeBalance, "Transaction create and applied");
->>>>>>> f794de5e41d48f078cf38d2a34c9a140e9617732
         }
 
         transaction.setApplied(true);
