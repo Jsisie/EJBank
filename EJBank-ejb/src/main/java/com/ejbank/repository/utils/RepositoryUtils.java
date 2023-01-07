@@ -48,7 +48,6 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
 
     /**
      * Checks if the given account id belongs to the given user id.
-     * If
      *
      * @param accountID The account to compare with the userID parameter. (Integer)
      * @param userID The userID to compare with the accountID parameter. (Integer)
