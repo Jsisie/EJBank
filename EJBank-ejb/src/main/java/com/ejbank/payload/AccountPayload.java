@@ -4,13 +4,13 @@ public class AccountPayload {
     private String owner;
     private String advisor;
     private Float rate;
-    private int interest;
+    private double interest;
     private Float amount;
     private String error;
 
     public AccountPayload(String ownerFirstName, String ownerLastName,
                           String advisorFirstName, String advisorLastName,
-                          Float rate, int interest, Float amount) {
+                          Float rate, double interest, Float amount) {
         this.owner = ownerFirstName + " " + ownerLastName;
         this.advisor = advisorFirstName + " " + advisorLastName;
         this.rate = rate;
@@ -34,7 +34,7 @@ public class AccountPayload {
         return rate;
     }
 
-    public int getInterest() {
+    public double getInterest() {
         return interest;
     }
 
