@@ -14,6 +14,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,6 +138,20 @@ public class TransactionRepository {
             //
             if (sourceAccount.getBalance() + sourceAccount.getAccountType().getOverdraft() >= transactionPayload.getAmount()) {
                 //todo
+                 var query = em.createQuery("INSERT INTO Transaction (account_id_from, account_id_to, author, amount, comment, applied, date) VALUES (:accountIdFrom, :accountIdTo, :author, :amount, :comment, :applied, :date)");
+                 query.setParameter("accountIdFrom", sourceAccount.getId());
+                 query.setParameter("accountIdTo", destinationAccount.getId());
+                 query.setParameter("author", user.getId());
+                 query.setParameter("amount", transactionPayload.getAmount());
+                 query.setParameter("comment", transactionPayload.getComment());
+                 query.setParameter("applied", true);
+                 query.setParameter("date", new Date(System.currentTimeMillis()));
+                 query.executeUpdate();
+
+                 var query2 = em.createQuery("UPDATE Account SET customer_id, account_type_id, balance) VALUES (:customerId, :accountTypeId, balance)");
+                 query2.setParameter("customerId", sourceAccount.getCustomer());
+                 query2.setParameter("accountTypeId", sourceAccount.getAccountType());
+                 query2.setParameter("balance", sourceAccount.getBalance() - transactionPayload.getAmount())
                 return new TransactionResponsePayLoad(
                         true,
                         "Vous  disposez d'un solde suffisant");
