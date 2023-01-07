@@ -202,8 +202,8 @@ public class TransactionRepository {
     }
 
     /**
-     * Validate a transaction for an Advisor. A transaction has to be validated by an advisor if the amount transfered
-     * is superior to 1000€.
+     * Validate a transaction for an Advisor. A transaction has to be validated by an advisor
+     * if the amount transferred is superior to 1000€.
      *
      * @param transactionPayload a Transaction request that has to be validated by an advisor
      * @return A transaction response after validating or not (and then applying or not) the requested transaction
