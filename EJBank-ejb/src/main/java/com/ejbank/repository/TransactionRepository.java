@@ -216,9 +216,7 @@ public class TransactionRepository {
             return new TransactionResponsePayLoad(returnError.get());
 
         if (!transactionPayload.getApprove()) {
-            em.createQuery("UPDATE TransactionEntity t SET t.applied = " + true + " WHERE t.id = :transactionId")
-                    .setParameter("transactionId", transaction.getId())
-                    .executeUpdate();
+            em.remove(transaction);
             return new TransactionResponsePayLoad(true, "Transaction canceled.");
         }
 
