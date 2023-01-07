@@ -86,7 +86,11 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
         return Optional.empty();
     }
 
-
+    /**
+     *
+     * @param account
+     * @return
+     */
     @Override
     public Double getInterest(AccountEntity account) {
         List<Double> monthlyInterestRates = new ArrayList<>();
