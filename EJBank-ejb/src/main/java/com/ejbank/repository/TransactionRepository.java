@@ -152,7 +152,7 @@ public class TransactionRepository {
             return new TransactionResponsePayLoad("Amount must be superior than 0");
 
         if (utils.isAdvisor(user)) {
-<<<<<<< HEAD
+
             //pas sur
             Optional<String> returnError = utils.isAccountReattachedToUser(sourceAccount.getId(), user.getId(), user);
             if (returnError.isPresent())
@@ -196,7 +196,7 @@ public class TransactionRepository {
                         false,
                         "Vous ne disposez pas d'un solde suffisant...");
             }
-=======
+
             var advisor = (AdvisorEntity) user;
             var customers = advisor.getCustomers();
             if (!customers.contains(sourceAccount.getCustomer()) || !customers.contains(destinationAccount.getCustomer()))
