@@ -179,7 +179,8 @@ public class TransactionRepository {
         if (!utils.isAdvisor(user) && amount > 1000) {
             transaction.setApplied(false);
             em.persist(transaction);
-            return new TransactionResponsePayLoad(false, beforeBalance, beforeBalance, "Transaction create and applied");
+            return new TransactionResponsePayLoad(true, beforeBalance, beforeBalance,
+                    "Transaction created, an Advisor will have to validate the transaction because the amount is superior to 1000 euros");
         }
 
         transaction.setApplied(true);
