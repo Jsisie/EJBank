@@ -13,6 +13,7 @@ public class ListTransactionPayload {
     }
 
     public ListTransactionPayload(String error) {
+        this.transactions = List.of();
         this.error = error;
     }
 

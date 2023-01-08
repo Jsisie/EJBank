@@ -23,7 +23,7 @@ public class TransactionResponsePayLoad {
         this.error = error;
     }
 
-    public boolean isResult() {
+    public boolean getResult() {
         return result;
     }
 

@@ -6,13 +6,13 @@ public class ListAccountsPayload {
     private List<AccountsPayload> accounts;
     private String error;
 
+    public ListAccountsPayload(List<AccountsPayload> accounts) {
+        this.accounts = accounts;
+    }
+
     public ListAccountsPayload(String error) {
         this.accounts = List.of();
         this.error = error;
-    }
-
-    public ListAccountsPayload(List<AccountsPayload> accounts) {
-        this.accounts = accounts;
     }
 
     public List<AccountsPayload> getAccounts() {
