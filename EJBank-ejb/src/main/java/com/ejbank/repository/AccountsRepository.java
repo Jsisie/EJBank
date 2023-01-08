@@ -52,7 +52,7 @@ public class AccountsRepository {
      * Returns all the customer accounts an advisor has access to as a ListAccountsPayload. If the id is the one of a
      * customer, returns "The User is not an advisor" as a response.
      *
-     * @param id The id of the UserEntity (advisor) to retrieve the customer accounts from. (Integer)
+     * @param id The id of the user (advisor) to retrieve the customer accounts from. (Integer)
      * @return A ListAccountsPayload of containing an advisor's attached customer accounts. Or a ListAccountsPayload with
      * the message "The User is not an advisor" if the given id is one of a customer.
      */
