@@ -12,6 +12,11 @@ import javax.ws.rs.core.MediaType;
 @RequestScoped
 public class ServerAPI {
 
+    /**
+     * Checks the status of the server. If the method returns, then the server is up.
+     *
+     * @return A new ServerPayload if the server is up. Else, does not return.
+     */
     @GET
     @Path("/status")
     public ServerPayload getStatus() {
