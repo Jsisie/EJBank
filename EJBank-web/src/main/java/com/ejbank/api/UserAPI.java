@@ -16,6 +16,14 @@ public class UserAPI {
     @EJB
     private UserBeanServiceImpl userBean;
 
+    /**
+     * Test method.
+     * Scope : "/user"
+     * Gets a first name and a last name from a user's id.
+     *
+     * @param id the id of the user. (int)
+     * @return The first name and the last name of a user as a UserPayload. (UserPayload)
+     */
     @GET
     @Path("/{id}")
     public UserPayload testEJBFirstName(@PathParam("id") Integer id) {
