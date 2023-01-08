@@ -4,9 +4,6 @@ public class UserPayload {
     private String firstName;
     private String lastName;
 
-    public UserPayload() {
-    }
-
     public UserPayload(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -16,23 +16,43 @@ public class TransactionRequestPayload {
     private String comment;
     private State state;
     private Boolean approve;
+    public static enum State {
+        APPLIED, TO_APPROVE, WAITING_APPROVE
+    }
 
-    public TransactionRequestPayload(){}
+    public TransactionRequestPayload() {
+    }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDate() {
         return date;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public Integer getSource() {
         return source;
     }
 
+    public void setSource(Integer source) {
+        this.source = source;
+    }
+
     public Integer getDestination() {
         return destination;
+    }
+
+    public void setDestination(Integer destination) {
+        this.destination = destination;
     }
 
     public String getDestination_user() {
@@ -47,53 +67,28 @@ public class TransactionRequestPayload {
         return amount;
     }
 
-    public Integer getAuthor() {
-        //return author.getFirstname() + " " + author.getLastname();
-        return author;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public State getState() {
-        return state;
-    }
-
-    public static enum State {
-        APPLIED, TO_APPROVE, WAITING_APPROVE
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setSource(Integer source) {
-        this.source = source;
-    }
-
-    public void setDestination(Integer destination) {
-        this.destination = destination;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
     public void setAmount(Float amount) {
         this.amount = amount;
+    }
+
+    public Integer getAuthor() {
+        return author;
     }
 
     public void setAuthor(Integer author) {
         this.author = author;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public State getState() {
+        return state;
     }
 
     public void setState(State state) {
@@ -102,6 +97,10 @@ public class TransactionRequestPayload {
 
     public UserEntity getUser() {
         return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public Boolean getApprove() {
