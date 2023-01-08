@@ -15,12 +15,6 @@ public class UserBeanServiceImpl implements UserBeanService {
     private UserRepository userRepository;
 
     /**
-     * UserBeanServiceImpl constructor.
-     */
-    public UserBeanServiceImpl() {
-    }
-
-    /**
      * Gets a first name and a last name from a user's id.
      *
      * @param id the id of the user. (int)

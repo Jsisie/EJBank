@@ -16,13 +16,6 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
 
     @Inject
     private TransactionRepository transactionRepository;
-
-    /**
-     * TransactionBeanServiceImpl constructor.
-     */
-    public TransactionBeanServiceImpl() {
-    }
-
     /**
      * Takes an advisor's ID as a parameter and returns the number of customer transactions he has yet to apply.
      * If the provided id is not an advisor's, the method returns 0.

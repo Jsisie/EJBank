@@ -16,12 +16,6 @@ public class AccountBeanServiceImpl implements AccountBeanService {
     private AccountRepository accountRepository;
 
     /**
-     * AccountBeanServiceImpl constructor.
-     */
-    public AccountBeanServiceImpl() {
-    }
-
-    /**
      * Returns a user's account as an AccountPayload.
      *
      * @param accountID The id of the account that is going to be searched for. (Integer)

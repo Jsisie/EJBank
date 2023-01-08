@@ -16,12 +16,6 @@ public class AccountsBeanServiceImpl implements AccountsBeanService {
     private AccountsRepository accountsRepository;
 
     /**
-     * AccountsBeanServiceImpl constructor.
-     */
-    public AccountsBeanServiceImpl() {
-    }
-
-    /**
      * Gathers all the accounts of a customer and returns them as a ListAccountsPayload.
      *
      * @param id The id of the user (customer) to retrieve the accounts from. (Integer)
