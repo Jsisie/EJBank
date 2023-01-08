@@ -20,18 +20,6 @@ public class TransactionAPI {
     private TransactionBeanServiceImpl transactionBeanService;
 
     /**
-     * Test method
-     * Returns a test String.
-     *
-     * @return A test String "test Transaction". (String)
-     */
-    @GET
-    @Path("/test")
-    public String testEJBFirstName() {
-        return transactionBeanService.test();
-    }
-
-    /**
      * Takes an advisor's ID as a parameter and returns the number of customer transactions he has yet to apply.
      * If the provided id is not an advisor's, the method returns 0.
      *

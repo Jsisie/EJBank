@@ -19,18 +19,6 @@ public class AccountsAPI {
     private AccountsBeanServiceImpl accountsBeanService;
 
     /**
-     * Test method
-     * Returns a test String.
-     *
-     * @return A test String "test Account". (String)
-     */
-    @GET
-    @Path("/test")
-    public String testEJBFirstName() {
-        return accountsBeanService.test();
-    }
-
-    /**
      * Gathers all the accounts of a customer and returns them as a ListAccountsPayload.
      *
      * @param id The id of the user (customer) to retrieve the accounts from. (Integer)
