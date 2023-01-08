@@ -28,10 +28,16 @@ public class AccountRepository {
     private EntityManager em;
 
     /**
+     * Get an account from a user as an AccountPayLoad. If the user is a customer, can only return one of his own
+     * accounts. If the user is an advisor, can only return one of his attached accounts.
      *
-     * @param accountID
-     * @param userID
-     * @return
+     * @param accountID The id of the account that is going to be searched for. (Integer)
+     * @param userID The id of the user whose account is wanted. (Integer)
+     * @return The specified account for the specified user as an AccountPayload. Returns an error AccountPayload if :
+     * - The given ID does not match with any user's.
+     * - The user is an advisor and the account  isn't part of his supervised accounts.
+     * - The user is a customer and the account doesnt belong to it.
+     * (AccountPayload)
      */
     public AccountPayload getAccount(Integer accountID, Integer userID) {
         AccountEntity account;
