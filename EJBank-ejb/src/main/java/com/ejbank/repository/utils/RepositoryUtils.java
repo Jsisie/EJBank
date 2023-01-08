@@ -87,9 +87,14 @@ public class RepositoryUtils implements RepositoryUtilsLocal {
     }
 
     /**
+     * Returns the current yearly interest of an account.
      *
-     * @param account
-     * @return
+     * The interest of an account is calculated as follows :
+     * - Compute the cumulated interest on the first of every month of the year
+     * - Make an average of the cumulated interest of every month.
+     *
+     * @param account The account to compute the interest for. (AccountEntity)
+     * @return The yearly interest of the account. (Double)
      */
     @Override
     public Double getInterest(AccountEntity account) {
