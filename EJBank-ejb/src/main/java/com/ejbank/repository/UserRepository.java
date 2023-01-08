@@ -16,9 +16,10 @@ public class UserRepository {
     private EntityManager em;
 
     /**
+     *Returns the name of a user from its ID.
      *
-     * @param id
-     * @return
+     * @param id The id of the user. (int)
+     * @return The first name and the last name of the user, as a UserPayload. (UserPayload)
      */
     public UserPayload getName(int id) {
         var user = em.find(UserEntity.class, id);
