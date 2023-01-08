@@ -9,7 +9,6 @@ import javax.ejb.Local;
 
 @Local
 public interface TransactionBeanService {
-    String test();
 
     ListTransactionPayload getTransactionList(Integer accountID, Integer offset, Integer userID);
 

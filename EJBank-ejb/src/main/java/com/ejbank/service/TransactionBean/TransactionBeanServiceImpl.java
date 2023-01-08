@@ -24,17 +24,6 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     }
 
     /**
-     * Test method
-     * Returns a test String.
-     *
-     * @return A test String "test Transaction". (String)
-     */
-    @Override
-    public String test() {
-        return "test Transaction";
-    }
-
-    /**
      * Takes an advisor's ID as a parameter and returns the number of customer transactions he has yet to apply.
      * If the provided id is not an advisor's, the method returns 0.
      *

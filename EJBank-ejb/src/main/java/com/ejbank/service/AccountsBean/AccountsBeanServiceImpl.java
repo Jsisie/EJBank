@@ -22,17 +22,6 @@ public class AccountsBeanServiceImpl implements AccountsBeanService {
     }
 
     /**
-     * Test method
-     * Returns a test String.
-     *
-     * @return A test String "test Account". (String)
-     */
-    @Override
-    public String test() {
-        return "test Account";
-    }
-
-    /**
      * Gathers all the accounts of a customer and returns them as a ListAccountsPayload.
      *
      * @param id The id of the user (customer) to retrieve the accounts from. (Integer)

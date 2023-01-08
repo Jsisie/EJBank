@@ -7,7 +7,6 @@ import javax.ejb.Local;
 
 @Local
 public interface AccountsBeanService {
-    String test();
 
     ListAccountsPayload getAccounts(Integer id);
 
