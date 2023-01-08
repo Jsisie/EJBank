@@ -1,7 +1,6 @@
 package com.ejbank.api;
 
 import com.ejbank.payload.ListTransactionPayload;
-import com.ejbank.payload.TransactionPayload;
 import com.ejbank.payload.TransactionRequestPayload;
 import com.ejbank.payload.TransactionResponsePayLoad;
 import com.ejbank.service.TransactionBean.TransactionBeanServiceImpl;
@@ -65,7 +64,7 @@ public class TransactionAPI {
      * Create a new transaction that can either be validated or not
      *
      * @param transactionRequestPayload the request for a transaction to apply (TransactionRequestPayload)
-     * @return a transaction response after applying (substracting an amount in an account and putting it in another)
+     * @return a transaction response after applying (subtracting an amount in an account and putting it in another)
      * (or not) the transaction. (TransactionResponsePayLoad)
      */
     @POST

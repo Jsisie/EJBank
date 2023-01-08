@@ -21,7 +21,6 @@ public class UserEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
     private List<TransactionEntity> transactions;
 
-
     public Integer getId() {
         return id;
     }

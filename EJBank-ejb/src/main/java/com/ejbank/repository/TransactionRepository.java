@@ -132,7 +132,7 @@ public class TransactionRepository {
      * Create a new transaction that can either be validated or not
      *
      * @param transactionPayload the request for a transaction to apply (TransactionRequestPayload)
-     * @return a transaction response after applying (substracting an amount in an account and putting it in another)
+     * @return a transaction response after applying (subtracting an amount in an account and putting it in another)
      * (or not) the transaction. (TransactionResponsePayLoad)
      */
     public TransactionResponsePayLoad getTransactionApply(TransactionRequestPayload transactionPayload) {

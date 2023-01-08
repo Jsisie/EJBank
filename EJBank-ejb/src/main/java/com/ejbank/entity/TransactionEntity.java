@@ -24,7 +24,6 @@ public class TransactionEntity {
     private String comment;
     @Column(name = "applied", nullable = false)
     private Boolean applied;
-//    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date", nullable=false)
     private Date date;
 

@@ -2,7 +2,6 @@ package com.ejbank.repository;
 
 import com.ejbank.entity.AccountEntity;
 import com.ejbank.entity.CustomerEntity;
-import com.ejbank.entity.TransactionEntity;
 import com.ejbank.entity.UserEntity;
 import com.ejbank.payload.AccountPayload;
 import com.ejbank.repository.utils.RepositoryUtilsLocal;
@@ -12,11 +11,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transaction;
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.*;
-import javax.persistence.Query;
+import java.util.Collection;
+import java.util.Objects;
 
 @Stateless
 @LocalBean
@@ -36,7 +32,7 @@ public class AccountRepository {
      * @return The specified account for the specified user as an AccountPayload. Returns an error AccountPayload if :
      * - The given ID does not match with any user's.
      * - The user is an advisor and the account  isn't part of his supervised accounts.
-     * - The user is a customer and the account doesnt belong to it.
+     * - The user is a customer and the account doesn't belong to it.
      * (AccountPayload)
      */
     public AccountPayload getAccount(Integer accountID, Integer userID) {

@@ -26,7 +26,7 @@ public class AccountAPI {
      * @return The specified account for the specified user as an AccountPayload. Returns an error AccountPayload if :
      *      - The given ID does not match with any user's.
      *      - The user is an advisor and the account  isn't part of his supervised accounts.
-     *      - The user is a customer and the account doesnt belong to it.
+     *      - The user is a customer and the account doesn't belong to it.
      *      (AccountPayload)
      */
     @GET
