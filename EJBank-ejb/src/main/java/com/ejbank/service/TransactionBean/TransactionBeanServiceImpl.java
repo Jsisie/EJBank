@@ -17,6 +17,9 @@ public class TransactionBeanServiceImpl implements TransactionBeanService {
     @Inject
     private TransactionRepository transactionRepository;
 
+    /**
+     * TransactionBeanServiceImpl constructor.
+     */
     public TransactionBeanServiceImpl() {
     }
 

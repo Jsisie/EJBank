@@ -14,6 +14,9 @@ public class UserBeanServiceImpl implements UserBeanService {
     @Inject
     private UserRepository userRepository;
 
+    /**
+     * UserBeanServiceImpl constructor.
+     */
     public UserBeanServiceImpl() {
     }
 

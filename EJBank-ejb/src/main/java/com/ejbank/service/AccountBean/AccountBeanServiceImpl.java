@@ -15,6 +15,9 @@ public class AccountBeanServiceImpl implements AccountBeanService {
     @Inject
     private AccountRepository accountRepository;
 
+    /**
+     * AccountBeanServiceImpl constructor.
+     */
     public AccountBeanServiceImpl() {
     }
 
