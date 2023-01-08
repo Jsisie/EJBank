@@ -18,11 +18,28 @@ public class AccountBeanServiceImpl implements AccountBeanService {
     public AccountBeanServiceImpl() {
     }
 
+    /**
+     * Test method
+     * Returns a test String.
+     *
+     * @return A test String "test Account". (String)
+     */
     @Override
     public String test() {
         return "test Account";
     }
 
+    /**
+     * Returns a user's account as an AccountPayload.
+     *
+     * @param accountID The id of the account that is going to be searched for. (Integer)
+     * @param userID The id of the supposed account's owner. (Integer)
+     * @return The specified account for the specified user as an AccountPayload. Returns an error AccountPayload if :
+     *      * - The given ID does not match with any user's.
+     *      * - The user is an advisor and the account  isn't part of his supervised accounts.
+     *      * - The user is a customer and the account doesnt belong to it.
+     *      (AccountPayload)
+     */
     @Override
     public AccountPayload getAccount(Integer accountID, Integer userID) {
         return accountRepository.getAccount(accountID, userID);
