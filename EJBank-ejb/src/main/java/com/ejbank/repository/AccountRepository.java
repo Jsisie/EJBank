@@ -51,7 +51,7 @@ public class AccountRepository {
                     .findFirst()
                     .orElse(null);
             if (account == null)
-                return new AccountPayload("The account does not corresponds to a Customer for this Advisor");
+                return new AccountPayload("The account does not correspond to a Customer for this Advisor");
             customer = account.getCustomer();
         } else {
             customer = customers.get(0);
@@ -60,7 +60,7 @@ public class AccountRepository {
                     .findFirst()
                     .orElse(null);
             if (account == null)
-                return new AccountPayload("The account does not corresponds to any of yours");
+                return new AccountPayload("The account does not correspond to any of yours");
         }
         var advisor = customer.getAdvisor();
 
@@ -76,5 +76,4 @@ public class AccountRepository {
                 account.getBalance()
         );
     }
-
 }
